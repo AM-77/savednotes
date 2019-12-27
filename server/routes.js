@@ -113,13 +113,28 @@ sn_router.post("/note", (req, res, next) => {
             if (db_err) {
                 res.status(500).json({ message: "There Was An Error Inserting Data Into The DB.", error: db_err })
             } else {
-                res.status(200).json(db_res)
+                res.status(200).json({ message: "The Note Was Inserted Successfully.", result: db_res })
             }
         })
     } else {
         res.status(400).json({ message: "Request Unsatisfied." })
     }
 
+})
+
+sn_router.delete("/note/:note_id", (req, res, next) => {
+    let note_id = Number(req.params.note_id)
+    if (isNaN(note_id)) {
+        res.status(400).json({ message: "Request Unsatisfied." })
+    } else {
+        db.query(`DELETE FROM notes WHERE id = '${note_id}'`, (db_err, db_res) => {
+            if (db_err) {
+                res.status(500).json({ message: "There Was An Error Deleting Data Into The DB.", error: db_err })
+            } else {
+                res.status(200).json({ message: "The Note Was Deleted Successfully.", result: db_res })
+            }
+        })
+    }
 })
 
 module.exports = sn_router
