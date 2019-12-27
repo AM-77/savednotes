@@ -1,0 +1,12 @@
+{
+  "name": "savednotes-server",
+  "version": "1.0.0",
+  "description": "The savednotes server with Node, Express & MySQL",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC"
+}
