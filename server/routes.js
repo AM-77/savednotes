@@ -102,4 +102,24 @@ sn_router.get("/note/:note_id", (req, res, next) => {
     })
 })
 
+sn_router.post("/note", (req, res, next) => {
+    let { user_id, title, content } = req.body
+    if (!content) content = ""
+
+    if (user_id && title) {
+        const note = { id: 0, user_id, title, content, created_at: new Date(), last_update: new Date() }
+        const sql = "INSERT INTO notes SET ?"
+        db.query(sql, note, (db_err, db_res) => {
+            if (db_err) {
+                res.status(500).json({ message: "There Was An Error Inserting Data Into The DB.", error: db_err })
+            } else {
+                res.status(200).json(db_res)
+            }
+        })
+    } else {
+        res.status(400).json({ message: "Request Unsatisfied." })
+    }
+
+})
+
 module.exports = sn_router
