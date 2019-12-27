@@ -4,6 +4,7 @@ const mysql = require("mysql")
 const bcryptjs = require("bcryptjs")
 const jwt = require("jsonwebtoken")
 const get_date = require("./helpers")
+const authentication = require("./middlewares/authentication")
 
 const DB_HOST = process.env.DB_HOST || "localhost"
 const DB_USER = process.env.DB_USER || "root"
@@ -71,7 +72,7 @@ sn_router.post("/login", (req, res, next) => {
     })
 })
 
-sn_router.get("/notes", (req, res, next) => {
+sn_router.get("/notes", authentication, (req, res, next) => {
     db.query("SELECT * FROM notes", (db_err, db_res) => {
         if (db_err) {
             res.status(500).json({ message: "There Was An Error Fetching Data From The DB.", error: db_err })
@@ -81,7 +82,7 @@ sn_router.get("/notes", (req, res, next) => {
     })
 })
 
-sn_router.get("/notes/:user_id", (req, res, next) => {
+sn_router.get("/notes/:user_id", authentication, (req, res, next) => {
     let user_id = req.params.user_id
     db.query(`SELECT * FROM notes WHERE user_id = '${user_id}'`, (db_err, db_res) => {
         if (db_err) {
@@ -92,7 +93,7 @@ sn_router.get("/notes/:user_id", (req, res, next) => {
     })
 })
 
-sn_router.get("/note/:note_id", (req, res, next) => {
+sn_router.get("/note/:note_id", authentication, (req, res, next) => {
     let note_id = req.params.note_id
     db.query(`SELECT * FROM notes WHERE id = '${note_id}'`, (db_err, db_res) => {
         if (db_err) {
@@ -103,7 +104,7 @@ sn_router.get("/note/:note_id", (req, res, next) => {
     })
 })
 
-sn_router.post("/note", (req, res, next) => {
+sn_router.post("/note", authentication, (req, res, next) => {
     let { user_id, title, content } = req.body
     if (user_id && title && content) {
         const note = { id: 0, user_id, title, content, created_at: get_date(), last_update: get_date() }
@@ -121,7 +122,7 @@ sn_router.post("/note", (req, res, next) => {
 
 })
 
-sn_router.delete("/note/:note_id", (req, res, next) => {
+sn_router.delete("/note/:note_id", authentication, (req, res, next) => {
     let note_id = Number(req.params.note_id)
     if (isNaN(note_id)) {
         res.status(400).json({ message: "Request Unsatisfied." })
@@ -136,7 +137,7 @@ sn_router.delete("/note/:note_id", (req, res, next) => {
     }
 })
 
-sn_router.patch("/note", (req, res, next) => {
+sn_router.patch("/note", authentication, (req, res, next) => {
     let { id, title, content } = req.body
     if (id && title && content) {
         db.query(`UPDATE notes SET title = '${title}', content = '${content}', last_update = '${get_date()}' WHERE id = ${id}`, (db_err, db_res) => {
@@ -151,7 +152,7 @@ sn_router.patch("/note", (req, res, next) => {
     }
 })
 
-sn_router.patch("/user", (req, res, next) => {
+sn_router.patch("/user", authentication, (req, res, next) => {
     let { id, username, new_password } = req.body
     if (username || new_password) {
         let sql = "UPDATE users SET "
@@ -187,7 +188,7 @@ sn_router.patch("/user", (req, res, next) => {
     }
 })
 
-sn_router.delete("/user/:user_id", (req, res, next) => {
+sn_router.delete("/user/:user_id", authentication, (req, res, next) => {
     let user_id = Number(req.params.user_id)
     if (isNaN(user_id)) {
         res.status(400).json({ message: "Request Unsatisfied." })
