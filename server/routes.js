@@ -70,5 +70,16 @@ sn_router.post("/login", (req, res, next) => {
     })
 })
 
+sn_router.get("/notes", (req, res, next) => {
+    db.query("SELECT * FROM notes", (db_err, db_res) => {
+        if (db_err) {
+            res.status(500).json({ message: "There Was An Error Fetching Data From The DB.", error: db_err })
+        } else {
+            res.status(200).json(db_res)
+        }
+    })
+})
+
+
 
 module.exports = sn_router
