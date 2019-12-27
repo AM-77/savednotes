@@ -151,4 +151,40 @@ sn_router.patch("/note", (req, res, next) => {
     }
 })
 
+sn_router.patch("/user", (req, res, next) => {
+    let { id, username, new_password } = req.body
+    if (username || new_password) {
+        let sql = "UPDATE users SET "
+        if (username) sql += ` username = '${username}'`
+        if (new_password) {
+            bcryptjs.hash(String(new_password), 7, (bc_err, hashed) => {
+                if (bc_err) {
+                    res.status(500).json({ message: "There Was An Error In Hashing The Password.", error: bc_err })
+                } else {
+                    if (username) sql += ","
+                    sql += ` password = '${hashed}' WHERE id = '${id}'`
+                    db.query(sql, (db_err, db_res) => {
+                        if (db_err) {
+                            res.status(500).json({ message: "There Was An Error Updating Data In The DB.", error: db_err })
+                        } else {
+                            res.status(200).json({ message: "The User Was Updated Successfully.", result: db_res })
+                        }
+                    })
+                }
+            })
+        } else {
+            sql += ` WHERE id = '${id}'`
+            db.query(sql, (db_err, db_res) => {
+                if (db_err) {
+                    res.status(500).json({ message: "There Was An Error Updating Data In The DB.", error: db_err })
+                } else {
+                    res.status(200).json({ message: "The User Was Updated Successfully.", result: db_res })
+                }
+            })
+        }
+    } else {
+        res.status(400).json({ message: "Request Unsatisfied." })
+    }
+})
+
 module.exports = sn_router
