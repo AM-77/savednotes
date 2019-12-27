@@ -187,4 +187,19 @@ sn_router.patch("/user", (req, res, next) => {
     }
 })
 
+sn_router.delete("/user/:user_id", (req, res, next) => {
+    let user_id = Number(req.params.user_id)
+    if (isNaN(user_id)) {
+        res.status(400).json({ message: "Request Unsatisfied." })
+    } else {
+        db.query(`DELETE FROM users WHERE id = '${user_id}'`, (db_err, db_res) => {
+            if (db_err) {
+                res.status(500).json({ message: "There Was An Error Deleting Data From The DB.", error: db_err })
+            } else {
+                res.status(200).json({ message: "The User Was Deleted Successfully.", result: db_res })
+            }
+        })
+    }
+})
+
 module.exports = sn_router
