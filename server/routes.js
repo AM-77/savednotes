@@ -26,14 +26,14 @@ sn_router.post("/subscribe", (req, res, next) => {
     if (email && password && username) {
         db.query(`SELECT * FROM users WHERE email = '${email}'`, (db_err, db_res) => {
             if (db_err) {
-                res.status(500).json({ message: "There Was An Error Fetching The DB." })
+                res.status(500).json({ message: "There Was An Error Fetching Data From The DB.", error: db_err })
             } else {
                 if (db_res.length > 0) {
                     res.status(409).json({ message: "Email Already Exists." })
                 } else {
-                    bcryptjs.hash(String(password), 7, (error, hashed) => {
-                        if (error) {
-                            res.status(500).json({ message: "There Was An Error In Hashing The Password.", error })
+                    bcryptjs.hash(String(password), 7, (bc_err, hashed) => {
+                        if (bc_err) {
+                            res.status(500).json({ message: "There Was An Error In Hashing The Password.", error: bc_err })
                         } else {
                             const user = { id: 0, username, email, password: hashed }
                             const sql = "INSERT INTO users SET ?"
@@ -50,6 +50,24 @@ sn_router.post("/subscribe", (req, res, next) => {
     else {
         res.status(400).json({ message: "Request Unsatisfied." })
     }
+})
+
+sn_router.post("/login", (req, res, next) => {
+    const { email, password } = req.body
+    db.query(`SELECT * FROM users WHERE email = '${email}'`, (db_err, db_res) => {
+        if (db_err) {
+            res.status(500).json({ message: "There Was An Error Fetching Data From The DB.", error: db_err })
+        } else {
+            bcryptjs.compare(String(password), db_res[0].password, (bc_err, bc_res) => {
+                if (bc_err || !bc_res) res.status(401).json({ message: "Authentication Failed.", error: bc_err })
+                else {
+                    const user = { id: db_res[0].id, username: db_res[0].username, email }
+                    let token = jwt.sign({ email }, process.env.JWT_KEY || "15zM4X4S5s0s8E1ApOk4r", { expiresIn: "7d" })
+                    res.status(200).json({ message: "Logged In.", token, user })
+                }
+            })
+        }
+    })
 })
 
 
