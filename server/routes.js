@@ -80,6 +80,26 @@ sn_router.get("/notes", (req, res, next) => {
     })
 })
 
+sn_router.get("/notes/:user_id", (req, res, next) => {
+    let user_id = req.params.user_id
+    db.query(`SELECT * FROM notes WHERE user_id = '${user_id}'`, (db_err, db_res) => {
+        if (db_err) {
+            res.status(500).json({ message: "There Was An Error Fetching Data From The DB.", error: db_err })
+        } else {
+            res.status(200).json(db_res)
+        }
+    })
+})
 
+sn_router.get("/note/:note_id", (req, res, next) => {
+    let note_id = req.params.note_id
+    db.query(`SELECT * FROM notes WHERE id = '${note_id}'`, (db_err, db_res) => {
+        if (db_err) {
+            res.status(500).json({ message: "There Was An Error Fetching Data From The DB.", error: db_err })
+        } else {
+            res.status(200).json(db_res)
+        }
+    })
+})
 
 module.exports = sn_router
