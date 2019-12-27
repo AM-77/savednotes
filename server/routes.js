@@ -3,6 +3,7 @@ const sn_router = express.Router()
 const mysql = require("mysql")
 const bcryptjs = require("bcryptjs")
 const jwt = require("jsonwebtoken")
+const get_date = require("./helpers")
 
 const DB_HOST = process.env.DB_HOST || "localhost"
 const DB_USER = process.env.DB_USER || "root"
@@ -104,10 +105,8 @@ sn_router.get("/note/:note_id", (req, res, next) => {
 
 sn_router.post("/note", (req, res, next) => {
     let { user_id, title, content } = req.body
-    if (!content) content = ""
-
-    if (user_id && title) {
-        const note = { id: 0, user_id, title, content, created_at: new Date(), last_update: new Date() }
+    if (user_id && title && content) {
+        const note = { id: 0, user_id, title, content, created_at: get_date(), last_update: get_date() }
         const sql = "INSERT INTO notes SET ?"
         db.query(sql, note, (db_err, db_res) => {
             if (db_err) {
@@ -129,11 +128,26 @@ sn_router.delete("/note/:note_id", (req, res, next) => {
     } else {
         db.query(`DELETE FROM notes WHERE id = '${note_id}'`, (db_err, db_res) => {
             if (db_err) {
-                res.status(500).json({ message: "There Was An Error Deleting Data Into The DB.", error: db_err })
+                res.status(500).json({ message: "There Was An Error Deleting Data From The DB.", error: db_err })
             } else {
                 res.status(200).json({ message: "The Note Was Deleted Successfully.", result: db_res })
             }
         })
+    }
+})
+
+sn_router.patch("/note", (req, res, next) => {
+    let { id, title, content } = req.body
+    if (id && title && content) {
+        db.query(`UPDATE notes SET title = '${title}', content = '${content}', last_update = '${get_date()}' WHERE id = ${id}`, (db_err, db_res) => {
+            if (db_err) {
+                res.status(500).json({ message: "There Was An Error Updating Data In The DB.", error: db_err })
+            } else {
+                res.status(200).json({ message: "The Note Was Updated Successfully.", result: db_res })
+            }
+        })
+    } else {
+        res.status(400).json({ message: "Request Unsatisfied." })
     }
 })
 
