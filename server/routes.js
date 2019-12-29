@@ -60,14 +60,19 @@ sn_router.post("/login", (req, res, next) => {
         if (db_err) {
             res.status(500).json({ message: "There Was An Error Fetching Data From The DB.", error: db_err })
         } else {
-            bcryptjs.compare(String(password), db_res[0].password, (bc_err, bc_res) => {
-                if (bc_err || !bc_res) res.status(401).json({ message: "Authentication Failed.", error: bc_err })
-                else {
-                    const user = { id: db_res[0].id, username: db_res[0].username, email }
-                    let token = jwt.sign({ email }, process.env.JWT_KEY || "15zM4X4S5s0s8E1ApOk4r", { expiresIn: "7d" })
-                    res.status(200).json({ message: "Logged In.", token, user })
-                }
-            })
+            if (db_res.length > 0) {
+                bcryptjs.compare(String(password), db_res[0].password, (bc_err, bc_res) => {
+                    if (bc_err || !bc_res) res.status(401).json({ message: "Authentication Failed.", error: bc_err })
+                    else {
+                        const user = { id: db_res[0].id, username: db_res[0].username, email }
+                        let token = jwt.sign({ email }, process.env.JWT_KEY || "15zM4X4S5s0s8E1ApOk4r", { expiresIn: "7d" })
+                        res.status(200).json({ message: "Logged In.", token, user })
+                    }
+                })
+            } else {
+                res.status(204).json({ message: "User Does Not Exist." })
+            }
+
         }
     })
 })
@@ -201,6 +206,18 @@ sn_router.delete("/user/:user_id", authentication, (req, res, next) => {
             }
         })
     }
+})
+
+sn_router.get("/user", authentication, (req, res, next) => {
+    let email = req.verified_token.email
+    db.query(`SELECT * FROM users WHERE email = '${email}'`, (db_err, db_res) => {
+        if (db_err) {
+            res.status(500).json({ message: "There Was An Error Getting Data From The DB.", error: db_err })
+        } else {
+            res.status(200).json({ result: db_res })
+        }
+    })
+
 })
 
 module.exports = sn_router
