@@ -2,7 +2,8 @@ import Types from '../Types'
 
 const initStore = {
     token: localStorage.getItem("token") || null,
-    user: null
+    user: null,
+    logged: false
 }
 
 const authenticationReducer = (store = initStore, action) => {
@@ -10,7 +11,8 @@ const authenticationReducer = (store = initStore, action) => {
         case Types.LOGIN: return {
             ...store,
             token: action.payload.token,
-            user: action.payload.user
+            user: action.payload.user,
+            logged: true
         }
 
         case Types.LOGOUT:
@@ -18,7 +20,8 @@ const authenticationReducer = (store = initStore, action) => {
             return {
                 ...store,
                 token: null,
-                user: null
+                user: null,
+                logged: false
             }
 
         case Types.LOAD_USER: return {
