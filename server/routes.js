@@ -62,7 +62,7 @@ sn_router.post("/login", (req, res, next) => {
         } else {
             if (db_res.length > 0) {
                 bcryptjs.compare(String(password), db_res[0].password, (bc_err, bc_res) => {
-                    if (bc_err || !bc_res) res.status(401).json({ message: "Authentication Failed.", error: bc_err })
+                    if (bc_err || !bc_res) res.status(401).json({ message: "Invalid Password.", error: bc_err })
                     else {
                         const user = { id: db_res[0].id, username: db_res[0].username, email }
                         let token = jwt.sign({ email }, process.env.JWT_KEY || "15zM4X4S5s0s8E1ApOk4r", { expiresIn: "7d" })
