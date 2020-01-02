@@ -7,6 +7,8 @@ import Login from './components/Login'
 import Home from './components/Home'
 import Logged from './components/Logged'
 
+import '@fortawesome/fontawesome-free/css/all.min.css'
+
 export default class App extends Component {
     render() {
         return (
