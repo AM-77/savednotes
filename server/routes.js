@@ -77,8 +77,18 @@ sn_router.post("/login", (req, res, next) => {
     })
 })
 
-sn_router.get("/notes", authentication, (req, res, next) => {
-    db.query("SELECT * FROM notes", (db_err, db_res) => {
+sn_router.get("/notes/:folder/:user_id", authentication, (req, res, next) => {
+    let folder = req.params.folder
+    let user_id = req.params.user_id
+
+    if (folder === "all") { sql = "SELECT * FROM notes WHERE privacy = 'public' AND trashed = '0' " }
+    if (folder === "my_all") { sql = `SELECT * FROM notes WHERE trashed = '0' AND user_id = '${user_id}' ` }
+    if (folder === "public") { sql = `SELECT * FROM notes WHERE privacy = 'public' AND trashed = '0' AND user_id = '${user_id}' ` }
+    if (folder === "private") { sql = `SELECT * FROM notes WHERE privacy = 'private' AND trashed = '0' AND user_id = '${user_id}' ` }
+    if (folder === "archived") { sql = `SELECT * FROM notes WHERE archived = '1' AND trashed = '0' AND user_id = '${user_id}' ` }
+    if (folder === "trashed") { sql = `SELECT * FROM notes WHERE trashed = '1' AND user_id = '${user_id}' ` }
+
+    db.query(sql, (db_err, db_res) => {
         if (db_err) {
             res.status(500).json({ message: "There Was An Error Fetching Data From The DB.", error: db_err })
         } else {
@@ -110,9 +120,9 @@ sn_router.get("/note/:note_id", authentication, (req, res, next) => {
 })
 
 sn_router.post("/note", authentication, (req, res, next) => {
-    let { user_id, title, content } = req.body
-    if (user_id && title && content) {
-        const note = { id: 0, user_id, title, content, created_at: get_date(), last_update: get_date() }
+    let { user_id, title, content, privacy } = req.body
+    if (user_id && title && content && privacy) {
+        const note = { id: 0, user_id, title, content, privacy, created_at: get_date(), last_update: get_date() }
         const sql = "INSERT INTO notes SET ?"
         db.query(sql, note, (db_err, db_res) => {
             if (db_err) {
@@ -122,6 +132,7 @@ sn_router.post("/note", authentication, (req, res, next) => {
             }
         })
     } else {
+        console.log({ user_id, title, content, privacy })
         res.status(400).json({ message: "Request Unsatisfied." })
     }
 
@@ -143,9 +154,25 @@ sn_router.delete("/note/:note_id", authentication, (req, res, next) => {
 })
 
 sn_router.patch("/note", authentication, (req, res, next) => {
-    let { id, title, content } = req.body
+    let { id, title, content, archived, privacy } = req.body
     if (id && title && content) {
-        db.query(`UPDATE notes SET title = '${title}', content = '${content}', last_update = '${get_date()}' WHERE id = ${id}`, (db_err, db_res) => {
+        db.query(`UPDATE notes SET title = '${title}', content = '${content}', last_update = '${get_date()}', privacy='${privacy}', archived='${archived}' WHERE id = ${id}`, (db_err, db_res) => {
+            if (db_err) {
+                res.status(500).json({ message: "There Was An Error Updating Data In The DB.", error: db_err })
+            } else {
+                res.status(200).json({ message: "The Note Was Updated Successfully.", result: db_res })
+            }
+        })
+    } else {
+        res.status(400).json({ message: "Request Unsatisfied." })
+    }
+})
+
+sn_router.patch("/note/:note_id", authentication, (req, res, next) => {
+    let note_id = Number(req.params.note_id)
+    let { trashed } = req.body
+    if (trashed === 0 || trashed === 1) {
+        db.query(`UPDATE notes SET trashed='${trashed}' WHERE id = ${note_id}`, (db_err, db_res) => {
             if (db_err) {
                 res.status(500).json({ message: "There Was An Error Updating Data In The DB.", error: db_err })
             } else {
@@ -214,10 +241,30 @@ sn_router.get("/user", authentication, (req, res, next) => {
         if (db_err) {
             res.status(500).json({ message: "There Was An Error Getting Data From The DB.", error: db_err })
         } else {
-            res.status(200).json({ result: db_res })
+            if (db_res.length > 0) {
+                let { id, email, username } = db_res[0]
+                res.status(200).json({ result: { id, email, username } })
+            }
+            else res.status(401).json({ message: "User Does Not Exist." })
         }
     })
 
+})
+
+sn_router.get("/search/:find", authentication, (req, res, next) => {
+    let find = req.params.find
+    let sql = ""
+    if (find !== "*")
+        sql = `SELECT user_id, archived, content, created_at, id, last_update, title FROM notes WHERE ( title LIKE '%${find}%' OR content LIKE '%${find}%' ) AND ( privacy = 'public' AND trashed != '1' )`
+    else
+        sql = `SELECT user_id, archived, content, created_at, id, last_update, title FROM notes WHERE ( privacy = 'public' AND trashed != 1 )`
+    db.query(sql, (db_err, db_res) => {
+        if (db_err) {
+            res.status(500).json({ message: "There Was An Error Fetching Data In The DB.", error: db_err })
+        } else {
+            res.status(200).json({ result: db_res })
+        }
+    })
 })
 
 module.exports = sn_router
