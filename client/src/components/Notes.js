@@ -4,8 +4,8 @@ export default class Notes extends Component {
 
     format_note_content = content => {
         let note_content = content.replace(/<[^>]*>?/gm, "").replace(/&nbsp;/gm, " ")
-        if (note_content.length > 50)
-            return note_content.slice(0, 50) + "..."
+        if (note_content.length > 40)
+            return note_content.slice(0, 40) + "..."
         return note_content
     }
 
@@ -84,7 +84,7 @@ export default class Notes extends Component {
                         :
                         <div className="empty-notes">
                             <div className="empty-wrapper">
-                                <h4>Can't Find Any Note.</h4>
+                                <h4>Can't Find Any Note Here.</h4>
                                 <button onClick={() => this.props.return_back("all")}><span className="fa fa-arrow-left"></span> go back</button>
                             </div>
                         </div>

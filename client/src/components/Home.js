@@ -58,7 +58,6 @@ class Home extends Component {
                 privacy: note.note_privacy ? 'private' : 'public'
             }
 
-            console.log(new_note)
             Axios.post(BASE_URL + "/note", new_note, { headers: { authorization: "Bearer " + this.props.auth.token } })
                 .then(res => {
                     if (res.status === 200) {
@@ -113,7 +112,8 @@ class Home extends Component {
     }
 
     return_back = (folder) => {
-        this.get_notes(folder ? folder : this.state.folder)
+        if (folder === "add-new") this.setState({ folder: "all" }, () => this.get_notes(this.state.folder))
+        else this.get_notes(this.state.folder)
     }
 
     render() {

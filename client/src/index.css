@@ -310,7 +310,7 @@ body {
     flex: 1;
     background: var(--pure-white);
     min-width: 250px;
-    max-width: 400px;
+    max-width: 300px;
     height: 140px;
     margin: 10px;
     padding: 10px;
@@ -318,6 +318,7 @@ body {
     box-shadow: var(--box-shadow);
     overflow-wrap: break-word;
     position: relative;
+    max-height: 125px;
 }
 
 .notes-container .notes .single-note .head {
@@ -697,6 +698,10 @@ body {
     border-radius: 3px;
     margin: 10px 0;
     background: var(--pure-white) !important
+}
+
+.jodit_container:not(.jodit_inline) .jodit_wysiwyg {
+    overflow-wrap: break-word;
 }
 
 .login-container,

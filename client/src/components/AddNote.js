@@ -35,7 +35,7 @@ export default class AddingNewNote extends Component {
                 <div className="editing-note">
                     <div className="title">
                         <h4>Creating New Note:</h4>
-                        <button onClick={this.props.return_back}>
+                        <button onClick={() => this.props.return_back("add-new")}>
                             <span className="fa fa-arrow-left"></span>
                         </button>
                     </div>
