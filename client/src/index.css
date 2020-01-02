@@ -1,13 +1,13 @@
-*{
+* {
     padding: 0;
     margin: 0;
     box-sizing: border-box;
 }
 
-:root{
+:root {
     --pure-white: #FFFFFF;
     --white: #F3F2F1;
-    --pure-black: #000000; 
+    --pure-black: #000000;
     --black: #4a4a4a;
     --main: #8981D8;
     --hard-main: #5a539c;
@@ -22,43 +22,46 @@
     --red: #ea2538;
     --hard-red: #ce515d;
     --blue-grey: #607D8B;
-    --neu: 8px 8px 14px rgb(163,177,198,0.6), -8px -8px 14px  rgba(255,255,255, 0.5);
+    --neu: 8px 8px 14px rgb(163, 177, 198, 0.6), -8px -8px 14px rgba(255, 255, 255, 0.5);
 }
 
 ::-webkit-scrollbar {
     width: 4px;
     height: 4px;
 }
-   
+
 ::-webkit-scrollbar-track {
     background: var(--faded-black);
     border-radius: 3px
 }
-   
+
 ::-webkit-scrollbar-thumb {
     background-color: var(--main);
     border-radius: 3px
 }
 
-body{
+body {
     overflow: hidden
 }
 
-.fa-lock, .fa-globe, .fa-unlock, .fa-archive{
+.fa-lock,
+.fa-globe,
+.fa-unlock,
+.fa-archive {
     cursor: help
 }
 
-.app-container{
+.app-container {
     display: flex;
 }
 
-.home-container{
+.home-container {
     display: flex;
     flex-direction: row;
     width: 100%;
 }
 
-.home-container .sidebar{
+.home-container .sidebar {
     display: flex;
     flex-direction: column;
     width: 20%;
@@ -69,7 +72,7 @@ body{
     height: 100vh;
 }
 
-.home-container .sidebar .logo{
+.home-container .sidebar .logo {
     display: flex;
     flex-direction: row;
     justify-content: center;
@@ -78,23 +81,23 @@ body{
     background: var(--faded-black);
 }
 
-.home-container .sidebar .logo img{
+.home-container .sidebar .logo img {
     display: flex;
     width: 50px;
     height: 50px;
 }
 
-.home-container .sidebar .logo span{
+.home-container .sidebar .logo span {
     font-size: 16px;
     font-weight: 700;
     color: var(--white)
 }
 
-.home-container .sidebar .folders{
+.home-container .sidebar .folders {
     padding-top: 20px;
 }
 
-.home-container .sidebar button.folder{
+.home-container .sidebar button.folder {
     display: block;
     width: 100%;
     height: 50px;
@@ -112,12 +115,12 @@ body{
     transition: all 150ms ease;
 }
 
-.home-container .sidebar button.folder:hover{
+.home-container .sidebar button.folder:hover {
     background: var(--faded-black)
 }
 
-.home-container .sidebar button.folder.active:before{
-    display:block;
+.home-container .sidebar button.folder.active:before {
+    display: block;
     content: "";
     height: 80%;
     width: 3px;
@@ -128,15 +131,15 @@ body{
     background: var(--white);
 }
 
-.home-container .sidebar .folders .divider{
-    display:block;
+.home-container .sidebar .folders .divider {
+    display: block;
     width: 70%;
     height: 1px;
     margin: 0 auto;
     background: var(--faded-black)
 }
 
-.home-container .editor-container{
+.home-container .editor-container {
     display: flex;
     flex-direction: column;
     max-width: calc(100% - 160px);
@@ -145,7 +148,7 @@ body{
     position: relative;
 }
 
-.home-container .editor-container .navbar{
+.home-container .editor-container .navbar {
     height: 60px;
     width: 100%;
     background: var(--pure-white);
@@ -153,7 +156,7 @@ body{
     z-index: 10;
 }
 
-.home-container .editor-container .navbar .navbar-container{
+.home-container .editor-container .navbar .navbar-container {
     display: flex;
     height: 100%;
     flex-direction: row;
@@ -161,16 +164,16 @@ body{
     padding: 0px 20px;
 }
 
-.home-container .editor-container .navbar .navbar-container .search{
+.home-container .editor-container .navbar .navbar-container .search {
     width: 80%;
 }
 
-.home-container .editor-container .navbar .navbar-container .search .fa-search{
+.home-container .editor-container .navbar .navbar-container .search .fa-search {
     color: var(--main);
     font-size: 16px;
 }
 
-.home-container .editor-container .navbar .navbar-container .search input{
+.home-container .editor-container .navbar .navbar-container .search input {
     font-size: 14px;
     border: none;
     font-family: "TheSans Mono";
@@ -180,14 +183,14 @@ body{
     width: 70%;
 }
 
-.home-container .editor-container .navbar .navbar-container .profile{
+.home-container .editor-container .navbar .navbar-container .profile {
     display: flex;
     flex-direction: row;
     margin-left: auto;
     align-items: center;
 }
 
-.home-container .editor-container .navbar .navbar-container .profile .user-pic{
+.home-container .editor-container .navbar .navbar-container .profile .user-pic {
     display: flex;
     justify-content: center;
     align-items: center;
@@ -200,8 +203,8 @@ body{
     margin-right: 10px;
 }
 
-.home-container .editor-container .navbar .navbar-container .profile .user-name{
-   display: flex;
+.home-container .editor-container .navbar .navbar-container .profile .user-name {
+    display: flex;
     justify-content: center;
     align-items: center;
     text-transform: capitalize;
@@ -210,7 +213,7 @@ body{
     text-decoration: underline;
 }
 
-.home-container .editor-container .navbar .navbar-container .profile button{
+.home-container .editor-container .navbar .navbar-container .profile button {
     margin: 0 0 0 10px;
     width: 30px;
     height: 30px;
@@ -224,7 +227,7 @@ body{
     transition: color 200ms ease;
 }
 
-.home-container .editor-container .navbar .navbar-container .profile button:hover{
+.home-container .editor-container .navbar .navbar-container .profile button:hover {
     color: var(--hard-main)
 }
 
@@ -242,54 +245,57 @@ body{
     animation: notify_user 1.4s cubic-bezier(0.54, -0.02, 0.34, 0.96) forwards;
 }
 
-.notify-user.success{
+.notify-user.success {
     background: var(--hard-green);
     border: 1px solid var(--green);
 }
 
-.notify-user.error{
+.notify-user.error {
     background: var(--hard-red);
     border: 1px solid var(--red);
 }
 
 
-@keyframes notify_user{
-    0%{
-       top: 10px;
-       opacity: 0;
+@keyframes notify_user {
+    0% {
+        top: 10px;
+        opacity: 0;
     }
-    20%{
-       top: 65px;
-       opacity: 1;
+
+    20% {
+        top: 65px;
+        opacity: 1;
     }
-    80%{
-       top: 65px;
-       opacity: 1;
+
+    80% {
+        top: 65px;
+        opacity: 1;
     }
-    100%{
-       top: 10px;
-       opacity: 0;
+
+    100% {
+        top: 10px;
+        opacity: 0;
     }
 }
 
-.notes-container{
+.notes-container {
     display: flex;
     flex: 1;
     flex-direction: column;
     margin: 20px;
 }
 
-.notes-container > h4{
+.notes-container>h4 {
     color: var(--black);
     margin-left: 10px
 }
 
-.notes-container > h4 span{
+.notes-container>h4 span {
     text-transform: uppercase;
     color: var(--main)
 }
 
-.notes-container .notes{
+.notes-container .notes {
     display: flex;
     flex-direction: row;
     max-height: calc(100vh - 120px);
@@ -298,7 +304,7 @@ body{
     flex-wrap: wrap;
 }
 
-.notes-container .notes .single-note{
+.notes-container .notes .single-note {
     display: flex;
     flex-direction: column;
     flex: 1;
@@ -314,47 +320,47 @@ body{
     position: relative;
 }
 
-.notes-container .notes .single-note .head{
+.notes-container .notes .single-note .head {
     display: flex;
     flex-direction: column;
 }
 
-.notes-container .notes .single-note .head .title{
+.notes-container .notes .single-note .head .title {
     display: flex;
     flex-direction: row;
     margin-bottom: 5px;
     place-items: center;
 }
 
-.notes-container .notes .single-note .head .title .privacy{
+.notes-container .notes .single-note .head .title .privacy {
     margin-right: 10px;
     display: flex;
 }
 
-.notes-container .notes .single-note .head .title .privacy .fa-unlock{
+.notes-container .notes .single-note .head .title .privacy .fa-unlock {
     color: var(--green);
 }
 
-.notes-container .notes .single-note .head .title .privacy .fa-lock{
+.notes-container .notes .single-note .head .title .privacy .fa-lock {
     color: var(--yellow)
 }
 
-.notes-container .notes .single-note .head .title .privacy .fa-archive{
+.notes-container .notes .single-note .head .title .privacy .fa-archive {
     color: var(--brown);
     margin-left: 5px;
 }
 
-.notes-container .notes .single-note .head .title .privacy .fa-globe{
+.notes-container .notes .single-note .head .title .privacy .fa-globe {
     color: var(--blue)
 }
 
-.notes-container .notes .single-note .head .title .edit{
+.notes-container .notes .single-note .head .title .edit {
     color: var(--blue-grey);
     margin-left: auto;
     cursor: pointer;
 }
 
-.notes-container .notes .single-note .head .title h4{
+.notes-container .notes .single-note .head .title h4 {
     font-weight: 700;
     color: var(--black);
     text-transform: capitalize;
@@ -364,7 +370,7 @@ body{
     position: relative;
 }
 
-.notes-container .notes .single-note .head .title h4:after{
+.notes-container .notes .single-note .head .title h4:after {
     display: block;
     content: "";
     position: absolute;
@@ -375,17 +381,17 @@ body{
     transition: all 200ms ease
 }
 
-.notes-container .notes .single-note .head .title h4:hover:after{
+.notes-container .notes .single-note .head .title h4:hover:after {
     width: 100%;
     background: var(--pure-black)
 }
 
-.notes-container .notes .single-note .head .title h4:hover{
+.notes-container .notes .single-note .head .title h4:hover {
     color: var(--pure-black);
     cursor: pointer;
 }
 
-.notes-container .notes .single-note .head .clock span{
+.notes-container .notes .single-note .head .clock span {
     font-weight: 400;
     font-size: 11px;
     width: 100%;
@@ -393,7 +399,7 @@ body{
     color: var(--black);
 }
 
-.notes-container .notes .single-note .content{
+.notes-container .notes .single-note .content {
     display: flex;
     font-family: "source sans pro";
     text-indent: 10px;
@@ -401,42 +407,42 @@ body{
     word-break: break-word;
 }
 
-.notes-container .notes .single-note .foot{
+.notes-container .notes .single-note .foot {
     display: flex;
     flex-direction: row;
     place-content: flex-end;
     margin-top: auto;
 }
 
-.notes-container .notes .single-note .foot button.delete{
+.notes-container .notes .single-note .foot button.delete {
     background: none;
     border: none;
     outline: none;
     cursor: pointer
 }
 
-.notes-container .notes .single-note .foot button.delete span.fa-trash-restore{
+.notes-container .notes .single-note .foot button.delete span.fa-trash-restore {
     color: var(--green);
 }
 
-.notes-container .notes .single-note .foot button.delete span{
+.notes-container .notes .single-note .foot button.delete span {
     color: var(--red);
     opacity: 0.9;
     transition: all 200ms ease;
 }
 
-.notes-container .notes .single-note .foot button.delete:hover span{
+.notes-container .notes .single-note .foot button.delete:hover span {
     opacity: 1;
     transform: rotate(25deg)
 }
 
-.notes-container .empty-notes{
+.notes-container .empty-notes {
     display: flex;
     justify-content: center;
     align-items: center;
 }
 
-.notes-container .empty-notes .empty-wrapper{
+.notes-container .empty-notes .empty-wrapper {
     display: flex;
     flex-direction: column;
     padding: 25px 120px;
@@ -447,7 +453,7 @@ body{
     margin-top: 40px
 }
 
-.notes-container .empty-notes .empty-wrapper h4{
+.notes-container .empty-notes .empty-wrapper h4 {
     font-size: 17px;
     font-weight: 300;
     color: var(--black);
@@ -455,7 +461,7 @@ body{
 }
 
 
-.notes-container .empty-notes .empty-wrapper button{
+.notes-container .empty-notes .empty-wrapper button {
     font-size: 12px;
     font-family: "TheSans Mone";
     text-transform: uppercase;
@@ -471,29 +477,29 @@ body{
     transition: all 200ms cubic-bezier(0.25, 0.1, 0, 0.98)
 }
 
-.notes-container .empty-notes .empty-wrapper button:hover{
+.notes-container .empty-notes .empty-wrapper button:hover {
     background: var(--hard-main);
 }
 
 
-.notes-editor{
+.notes-editor {
     display: flex;
     flex-direction: column;
     flex: 1;
 }
 
-.editing-note{
+.editing-note {
     display: flex;
     flex: 1;
-    flex-direction:column;
+    flex-direction: column;
     padding: 20px;
 }
 
-.editing-note > .title{
+.editing-note>.title {
     display: flex;
 }
 
-.editing-note .title h4{
+.editing-note .title h4 {
     display: inline-block;
     font-size: 21px;
     font-family: "TheSans Mono";
@@ -503,7 +509,7 @@ body{
     position: relative;
 }
 
-.editing-note .title h4:after{
+.editing-note .title h4:after {
     display: block;
     content: "";
     position: absolute;
@@ -512,36 +518,36 @@ body{
     background: var(--main);
 }
 
-.editing-note .title button{
-   margin-left: auto ;
-   width: 35px;
-   height: 35px;
-   border-radius: 100%;
-   border: 1px solid var(--hard-main);
-   background: var(--main);
-   color: var(--white);
-   box-shadow: var(--box-shadow);
-   cursor: pointer;
-   outline: none;
-   opacity: 0.75;
-   transition: opacity 200ms ease;
+.editing-note .title button {
+    margin-left: auto;
+    width: 35px;
+    height: 35px;
+    border-radius: 100%;
+    border: 1px solid var(--hard-main);
+    background: var(--main);
+    color: var(--white);
+    box-shadow: var(--box-shadow);
+    cursor: pointer;
+    outline: none;
+    opacity: 0.75;
+    transition: opacity 200ms ease;
 }
 
-.editing-note .title button:hover{
+.editing-note .title button:hover {
     opacity: 1
 }
 
-.editing-note .head{
+.editing-note .head {
     display: flex;
     align-items: center;
     margin-bottom: 20px
 }
 
-.editing-note .head .input-element label{
+.editing-note .head .input-element label {
     font-weight: 700;
 }
 
-.editing-note .head .input-element input[type='text']{
+.editing-note .head .input-element input[type='text'] {
     display: block;
     border: none;
     margin-left: 10px;
@@ -556,11 +562,11 @@ body{
 }
 
 .editing-note .head .input-element input[type='text']:hover,
-.editing-note .head .input-element input[type='text']:focus{
+.editing-note .head .input-element input[type='text']:focus {
     border-bottom: 2px solid var(--main);
 }
 
-.editing-note .head .input-element input[type='checkbox']{
+.editing-note .head .input-element input[type='checkbox'] {
     width: 34px;
     height: 14px;
     cursor: pointer;
@@ -568,7 +574,7 @@ body{
     position: relative;
 }
 
-.editing-note .head .input-element input[type='checkbox']:before{
+.editing-note .head .input-element input[type='checkbox']:before {
     display: block;
     content: "";
     position: absolute;
@@ -579,7 +585,7 @@ body{
     transition: all 200ms cubic-bezier(0.25, 0.1, 0, 0.98);
 }
 
-.editing-note .head .input-element input[type='checkbox']:after{
+.editing-note .head .input-element input[type='checkbox']:after {
     display: block;
     content: "";
     position: absolute;
@@ -593,50 +599,50 @@ body{
     transition: all 200ms cubic-bezier(0.25, 0.1, 0, 0.98);
 }
 
-.editing-note .head .input-element input[type='checkbox']:checked:before{
+.editing-note .head .input-element input[type='checkbox']:checked:before {
     background: var(--main);
 }
 
-.editing-note .head .input-element input[type='checkbox']:checked:after{
+.editing-note .head .input-element input[type='checkbox']:checked:after {
     left: calc(100% - 16px);
     background: var(--hard-main)
 }
 
-.editing-note .head .input-element{
+.editing-note .head .input-element {
     display: flex;
     margin-right: 20px;
 }
 
-.editing-note .head .input-element:first-child{
-    margin-right:auto;
+.editing-note .head .input-element:first-child {
+    margin-right: auto;
 }
 
-.editing-note .head .input-element:last-child{
+.editing-note .head .input-element:last-child {
     margin-right: 0;
 }
 
-.editing-note .foot{
+.editing-note .foot {
     display: flex;
     align-items: center;
     margin-top: 15px;
 }
 
-.editing-note .foot .infos{
+.editing-note .foot .infos {
     display: flex;
     font-size: 13px;
     font-family: "Source sans pro";
     color: var(--black)
 }
 
-.editing-note .foot .infos .title{
+.editing-note .foot .infos .title {
     font-weight: 700;
 }
 
-.editing-note .foot .infos .fa-clock{
+.editing-note .foot .infos .fa-clock {
     color: var(--hard-main)
 }
 
-.editing-note .foot button{
+.editing-note .foot button {
     margin-left: auto;
     font-size: 12px;
     font-family: "TheSans Mone";
@@ -653,21 +659,21 @@ body{
     transition: all 200ms cubic-bezier(0.25, 0.1, 0, 0.98)
 }
 
-.editing-note .foot button:hover{
+.editing-note .foot button:hover {
     background: var(--hard-main);
 }
 
 .global-note .head .input-element input[type='text'],
 .global-note .head .input-element input[type='text']:hover,
-.global-note .head .input-element input[type='text']:focus{
-   border: none
+.global-note .head .input-element input[type='text']:focus {
+    border: none
 }
 
-.global-note .foot .infos p{
+.global-note .foot .infos p {
     margin-right: 25px;
 }
 
-.global-note .jodit_toolbar_container{
+.global-note .jodit_toolbar_container {
     display: none;
 }
 
@@ -676,12 +682,13 @@ body{
     max-height: 300px !important;
 }
 
-.jodit_toolbar, .jodit_statusbar {
+.jodit_toolbar,
+.jodit_statusbar {
     border: 0px solid #ccc !important;
     box-shadow: none !important
 }
 
-.jodit_container:not(.jodit_inline){
+.jodit_container:not(.jodit_inline) {
     background: none !important
 }
 
@@ -693,7 +700,7 @@ body{
 }
 
 .login-container,
-.subscribe-container{
+.subscribe-container {
     display: flex;
     flex-direction: column;
     flex: 1;
@@ -704,7 +711,7 @@ body{
 }
 
 .login-container .login-logo,
-.subscribe-container .subscribe-logo{
+.subscribe-container .subscribe-logo {
     min-width: 360px;
     text-align: center;
     margin-bottom: 30px;
@@ -715,40 +722,42 @@ body{
 }
 
 .login-container .login-logo img,
-.subscribe-container .subscribe-logo img{
+.subscribe-container .subscribe-logo img {
     width: 150px
 }
 
 .login-container .login-logo h2,
-.subscribe-container .subscribe-logo h2{
+.subscribe-container .subscribe-logo h2 {
     font-size: 37px;
     text-transform: lowercase;
     color: var(--main);
 }
 
-.login-container .login-form ,
+.login-container .login-form,
 .subscribe-container .subscribe-form {
     width: 350px
 }
 
-.login-container .login-form form, .login-container .login-input,
-.subscribe-container .subscribe-form form, .subscribe-container .subscribe-input{
+.login-container .login-form form,
+.login-container .login-input,
+.subscribe-container .subscribe-form form,
+.subscribe-container .subscribe-input {
     display: flex;
     flex-direction: column;
 }
 
 .login-container .login-input,
-.subscribe-container .subscribe-input{
+.subscribe-container .subscribe-input {
     margin-bottom: 15px;
 }
 
 .login-container .login-input:last-child,
-.subscribe-container .subscribe-input:last-child{
+.subscribe-container .subscribe-input:last-child {
     margin-bottom: 0;
 }
 
 .login-container .login-input label,
-.subscribe-container .subscribe-input label{
+.subscribe-container .subscribe-input label {
     font-weight: 700;
     color: var(--black);
     font-size: 12px;
@@ -756,7 +765,7 @@ body{
 }
 
 .login-container .login-input input,
-.subscribe-container .subscribe-input input{
+.subscribe-container .subscribe-input input {
     display: block;
     border: none;
     background: transparent;
@@ -771,18 +780,18 @@ body{
 .login-container .login-input input:hover,
 .login-container .login-input input:focus,
 .subscribe-container .subscribe-input input:hover,
-.subscribe-container .subscribe-input input:focus{
+.subscribe-container .subscribe-input input:focus {
     border-bottom: 2px solid var(--main);
 }
 
 .login-container .login-foot,
-.subscribe-container .subscribe-foot{
+.subscribe-container .subscribe-foot {
     display: flex;
     align-items: center
 }
 
 .login-container .login-foot button,
-.subscribe-container .subscribe-foot button{
+.subscribe-container .subscribe-foot button {
     margin-left: auto;
     font-size: 12px;
     font-family: "TheSans Mone";
@@ -800,12 +809,12 @@ body{
 }
 
 .login-container button:hover,
-.subscribe-container button:hover{
+.subscribe-container button:hover {
     background: var(--hard-main);
 }
 
 .login-container .login-foot a,
-.subscribe-container .subscribe-foot a{
+.subscribe-container .subscribe-foot a {
     text-decoration: none;
     font-weight: 700;
     color: var(--main);
@@ -815,12 +824,12 @@ body{
 }
 
 .login-container .login-foot a:hover,
-.subscribe-container .subscribe-foot a:hover{
+.subscribe-container .subscribe-foot a:hover {
     color: var(--hard-main)
 }
 
 .login-container .login-foot a:after,
-.subscribe-container .subscribe-foot a:after{
+.subscribe-container .subscribe-foot a:after {
     display: block;
     content: "";
     position: absolute;
@@ -832,7 +841,7 @@ body{
 }
 
 .login-container .login-foot a:hover:after,
-.subscribe-container .subscribe-foot a:hover:after{
+.subscribe-container .subscribe-foot a:hover:after {
     width: 100%;
     background: var(--hard-main)
 }
@@ -844,7 +853,7 @@ body{
 }
 
 .login-container .loading-user .loading,
-.subscribe-container .loading-user .loading{
+.subscribe-container .loading-user .loading {
     text-align: center;
     position: relative;
     font-weight: 700;
@@ -852,32 +861,150 @@ body{
 }
 
 .login-container .loading span,
-.subscribe-container .loading span{
+.subscribe-container .loading span {
     position: relative;
     top: -8px;
     animation: up_down 600ms linear infinite;
 }
 
 .login-container .loading span:nth-child(2),
-.subscribe-container .loading span:nth-child(2){
+.subscribe-container .loading span:nth-child(2) {
     animation-delay: 200ms
 }
 
 .login-container .loading span:nth-child(3),
-.subscribe-container .loading span:nth-child(3){
+.subscribe-container .loading span:nth-child(3) {
     animation-delay: 400ms
 }
 
-@keyframes up_down{
-    0%{
+@keyframes up_down {
+    0% {
         top: -6px
     }
-    
-    50%{
+
+    50% {
         top: 0px
     }
 
-    100%{
+    100% {
         top: -6px
+    }
+}
+
+.laoding-container {
+    display: flex;
+    flex: 1;
+    justify-content: center;
+    align-items: center;
+    align-content: center;
+    height: 100vh;
+}
+
+.loading {
+    display: block;
+    width: 100%;
+    text-align: center;
+}
+
+.lds-spinner {
+    display: inline-block;
+    position: relative;
+    width: 80px;
+    height: 80px;
+}
+
+.lds-spinner img {
+    display: block;
+    width: 25px;
+    height: 25px;
+    position: relative;
+    left: 27px;
+    top: 27px;
+}
+
+.lds-spinner div {
+    transform-origin: 40px 40px;
+    animation: lds-spinner 1.2s linear infinite;
+}
+
+.lds-spinner div:after {
+    content: " ";
+    display: block;
+    position: absolute;
+    top: 3px;
+    left: 37px;
+    width: 6px;
+    height: 18px;
+    border-radius: 20%;
+    background-image: linear-gradient(to bottom, var(--hard-main) 0%, var(--main) 90%, var(--faded-black) 100%);
+}
+
+.lds-spinner div:nth-child(1) {
+    transform: rotate(0deg);
+    animation-delay: -1.1s;
+}
+
+.lds-spinner div:nth-child(2) {
+    transform: rotate(30deg);
+    animation-delay: -1s;
+}
+
+.lds-spinner div:nth-child(3) {
+    transform: rotate(60deg);
+    animation-delay: -0.9s;
+}
+
+.lds-spinner div:nth-child(4) {
+    transform: rotate(90deg);
+    animation-delay: -0.8s;
+}
+
+.lds-spinner div:nth-child(5) {
+    transform: rotate(120deg);
+    animation-delay: -0.7s;
+}
+
+.lds-spinner div:nth-child(6) {
+    transform: rotate(150deg);
+    animation-delay: -0.6s;
+}
+
+.lds-spinner div:nth-child(7) {
+    transform: rotate(180deg);
+    animation-delay: -0.5s;
+}
+
+.lds-spinner div:nth-child(8) {
+    transform: rotate(210deg);
+    animation-delay: -0.4s;
+}
+
+.lds-spinner div:nth-child(9) {
+    transform: rotate(240deg);
+    animation-delay: -0.3s;
+}
+
+.lds-spinner div:nth-child(10) {
+    transform: rotate(270deg);
+    animation-delay: -0.2s;
+}
+
+.lds-spinner div:nth-child(11) {
+    transform: rotate(300deg);
+    animation-delay: -0.1s;
+}
+
+.lds-spinner div:nth-child(12) {
+    transform: rotate(330deg);
+    animation-delay: 0s;
+}
+
+@keyframes lds-spinner {
+    0% {
+        opacity: 1;
+    }
+
+    100% {
+        opacity: 0;
     }
 }

@@ -2,6 +2,7 @@ import React, { Component } from 'react'
 import { Redirect } from 'react-router-dom'
 import { connect } from 'react-redux'
 import Axios from 'axios'
+import Loading from './Loading'
 import { load_user, logout } from './../redux-store/action-creators/authenticationActionCreator'
 
 const token = localStorage.getItem("token")
@@ -18,7 +19,7 @@ class Logged extends Component {
                         this.props.logout()
                         return <Redirect to="/login" />
                     })
-                return <p>loading ...</p>
+                return <Loading />
             } else {
                 return <Redirect to="/login" />
             }
