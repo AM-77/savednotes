@@ -14,7 +14,9 @@ class Login extends Component {
         this.state = {
             message: null,
             email: null,
-            password: null
+            password: null,
+            logged: false,
+            looking_for_user: false
         }
     }
 
@@ -32,12 +34,13 @@ class Login extends Component {
         if (this.state.email === "" || this.state.password === "") {
             this.show_message({ type: "error", content: "Please Enter Your Email & Password." })
         } else {
+            this.setState({ looking_for_user: true })
             Axios.post(BASE_URL + "/login", { email: this.state.email, password: this.state.password })
                 .then(res => {
                     if (res.data) {
-                        localStorage.setItem("token", res.data.token)
                         this.props.login(res.data.token, res.data.user)
-                        this.props.history.push("/")
+                        localStorage.setItem("token", res.data.token)
+                        this.setState({ logged: true })
                     } else {
                         this.show_message({ type: "error", content: "User Does Not Exist. Please Create An Account, and Retry." })
                     }
@@ -50,7 +53,8 @@ class Login extends Component {
 
 
     render = () => {
-        if (localStorage.getItem("token")) {
+        console.log(this.props)
+        if (localStorage.getItem("token") || this.props.auth.logged) {
             return <Redirect to="/" />
         } else {
             return (<div className="login-container">
@@ -68,6 +72,7 @@ class Login extends Component {
                         <div className="login-input">
                             <label htmlFor="password">Your password</label>
                             <input id="password" className="login-input" name="password" type="password" onChange={this.onInputChange} />
+                            {this.state.looking_for_user ? <div>loading ...</div> : null}
                         </div>
                         <button type="submit" onClick={this.onLogin} className="login-button">Sign In</button>
                         <Link to="/subscribe">Subscribe now.</Link>
