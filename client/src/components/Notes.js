@@ -3,7 +3,7 @@ import React, { Component } from 'react'
 export default class Notes extends Component {
 
     format_note_content = content => {
-        let note_content = content.replace(/<[^>]*>?/gm, "")
+        let note_content = content.replace(/<[^>]*>?/gm, "").replace(/&nbsp;/gm, " ")
         if (note_content.length > 50)
             return note_content.slice(0, 50) + "..."
         return note_content
@@ -15,6 +15,14 @@ export default class Notes extends Component {
         else return "Unknown Date"
     }
 
+    folder_name = folder => {
+        let _folder = folder
+        if (folder === "all") _folder = "Public"
+        if (folder === "my_all") _folder = "My Notes"
+
+        return _folder
+    }
+
     render() {
         return (
             <div className="notes-container">
@@ -22,7 +30,7 @@ export default class Notes extends Component {
                     this.props.notes.length > 0
                         ?
                         <React.Fragment>
-                            <h4>{this.props.msg}</h4>
+                            <h4><span>{this.props.notes.length}</span> Notes Was Found In The <span>{this.folder_name(this.props.folder)} Folder</span></h4>
                             <div className="notes">
                                 {
                                     this.props.notes.map((note, index) => (
@@ -35,7 +43,7 @@ export default class Notes extends Component {
                                                     <div className="title">
                                                         <div className="privacy">
                                                             {note.privacy === "private" ? <span className="fa fa-lock" title="Private Note"></span> : <span className="fa fa-unlock" title="Public Note"></span>}
-                                                            {note.archived ? <span className="fa fa-archive" title="Aechived Note"></span> : null}
+                                                            {note.archived ? <span className="fa fa-archive" title="Archived Note"></span> : null}
                                                         </div>
                                                         <h4 onClick={() => this.props.update_note(note)}>{note.title}</h4>
                                                         <span onClick={() => this.props.update_note(note)} className="edit fa fa-book-reader" title="Open Note"></span>
@@ -75,8 +83,10 @@ export default class Notes extends Component {
                         </React.Fragment>
                         :
                         <div className="empty-notes">
-                            <h4>Can't Find Any Note.</h4>
-                            <button onClick={this.props.add_new_note}>Add A New Note</button>
+                            <div className="empty-wrapper">
+                                <h4>Can't Find Any Note.</h4>
+                                <button onClick={() => this.props.return_back("all")}><span className="fa fa-arrow-left"></span> go back</button>
+                            </div>
                         </div>
                 }
             </div>

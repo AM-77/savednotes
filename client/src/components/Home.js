@@ -5,7 +5,9 @@ import { logout } from '../redux-store/action-creators/authenticationActionCreat
 import NavBar from './NavBar'
 import SideBar from './SideBar'
 import Notes from './Notes'
-import JoditEditor from 'jodit-react'
+import AddingNewNote from './AddNote'
+import EditingNote from './EditNote'
+import DisplayNote from './DisplayNote'
 
 const BASE_URL = "http://localhost:3300/sn-api"
 
@@ -15,15 +17,6 @@ class Home extends Component {
         super(props)
         this.state = {
             found_notes: [],
-            msg: "",
-            note_title: "",
-            note_content: "",
-            note_privacy: false,
-            note_archived: 0,
-            editor_config: { readonly: true },
-            adding_note: false,
-            editing_note: false,
-            showing_note: false,
             folder: "all"
         }
     }
@@ -35,106 +28,92 @@ class Home extends Component {
     search = (find) => {
         if (find === "") find = "*"
         Axios.get(BASE_URL + "/search/" + find, { headers: { authorization: "Bearer " + this.props.auth.token } })
-            .then(res => this.setState({ found_notes: res.data.result, msg: res.data.result.length + " Note Was Found" }))
+            .then(res => this.setState({ found_notes: res.data.result }))
             .catch(err => console.log(err))
 
     }
 
     get_notes = (folder) => {
-        this.setState({ folder, adding_note: false, editing_note: false, showing_note: false })
+        this.setState({ folder, display: "notes" })
         Axios.get(BASE_URL + "/notes/" + folder + "/" + this.props.auth.user.id, { headers: { authorization: "Bearer " + this.props.auth.token } })
             .then(res => {
-                this.setState({ found_notes: res.data, msg: "This message needs to be handeled" })
+                this.setState({ found_notes: res.data, folder })
             })
             .catch(err => console.log(err))
     }
 
-    add_new_note = () => this.setState({ adding_note: true, editor_config: { readonly: false }, editing_note: false, showing_note: false })
+    add_new_note = () => this.setState({ display: "add_new" })
 
-    note_title = e => this.setState({ note_title: e.target.value })
+    show_note = note => this.setState({ note, display: "show_note" })
 
-    note_privacy = e => this.setState({ note_privacy: e.target.checked ? "private" : "public" })
+    update_note = note_to_update => this.setState({ note_to_update, display: "edit_note" })
 
-    note_archived = e => this.setState({ note_archived: e.target.checked ? 1 : 0 })
 
-    save_note = () => {
-        console.log(this.state)
-        if (this.state.note_title !== "" && this.state.note_content !== "") {
+    save_note = (note) => {
+        if (note.note_title !== "" && note.note_content !== "") {
             let new_note = {
                 user_id: this.props.auth.user.id,
-                title: this.state.note_title,
-                content: this.state.note_content,
-                privacy: this.state.note_privacy ? 'private' : 'public'
+                title: note.note_title,
+                content: note.note_content,
+                privacy: note.note_privacy ? 'private' : 'public'
             }
 
+            console.log(new_note)
             Axios.post(BASE_URL + "/note", new_note, { headers: { authorization: "Bearer " + this.props.auth.token } })
                 .then(res => {
-                    if (res.data.status === 200) {
-                        this.setState({ adding_note: false, editing_note: false, showing_note: false }, () => this.get_notes(this.state.folder))
+                    if (res.status === 200) {
+                        this.setState({ display: "notes", notif: { message: "The New Note Has Been Added Successfully.", type: "success" } }, () => {
+                            this.get_notes(this.state.folder)
+                            setTimeout(() => { this.setState({ notif: null }) }, 1700)
+                        })
                     }
                 })
-                .catch(err => console.log(err))
+                .catch(err => this.setState({ notif: { message: "An Error Occured While Adding The New Note.", type: "error" } }, () => {
+                    setTimeout(() => { this.setState({ notif: null }) }, 1700)
+                }))
+        } else {
+            this.setState({ notif: { message: "Please Fill Empty Fields.", type: "error" } }, () => {
+                setTimeout(() => { this.setState({ notif: null }) }, 1700)
+            })
         }
     }
 
-    show_note = note => {
-        this.setState({
-            note_title: note.title,
-            note_content: note.content,
-            note_archived: note.archived,
-            adding_note: false,
-            editing_note: false,
-            showing_note: true,
-            editor_config: { readonly: true }
-        })
-    }
-
-    update_note = note => {
-        this.setState({
-            updated_note_id: note.id,
-            note_title: note.title,
-            note_content: note.content,
-            note_archived: note.archived,
-            note_privacy: note.privacy,
-            editing_note: true,
-            showing_note: false,
-            adding_note: false,
-            editor_config: { readonly: false },
-            note_last_update: note.last_update,
-            note_created_at: note.created_at
-        })
-    }
-
-    save_edited_note = () => {
-        let new_note = {
-            id: this.state.updated_note_id,
-            title: this.state.note_title,
-            content: this.state.note_content,
-            archived: this.state.note_archived,
-            privacy: this.state.note_privacy,
-        }
-
-        Axios.patch(BASE_URL + "/note", new_note, { headers: { authorization: "Bearer " + this.props.auth.token } })
-            .then(res => this.get_notes(this.state.folder))
-            .catch(err => console.log(err))
-
+    save_edited_note = (edited_note) => {
+        Axios.patch(BASE_URL + "/note", edited_note, { headers: { authorization: "Bearer " + this.props.auth.token } })
+            .then(res => {
+                this.setState({ notif: { message: "The Note Has Been Updated Successfully.", type: "success" } }, () => {
+                    setTimeout(() => { this.setState({ notif: null }) }, 1700)
+                })
+                this.get_notes(this.state.folder)
+            })
+            .catch(err => this.setState({ notif: { message: "An Error Occured While Updating The Note.", type: "error" } }, () => {
+                setTimeout(() => { this.setState({ notif: null }) }, 1700)
+            }))
     }
 
     trash_note = (note_id, _trashed) => {
-        let trashed = _trashed === 0 ? 1 : 0
+        let trashed = 0
+        _trashed === 0 ? trashed = 1 : trashed = 0
+
         Axios.patch(BASE_URL + "/note/" + note_id, { trashed }, { headers: { authorization: "Bearer " + this.props.auth.token } })
-            .then(res => this.get_notes(this.state.folder))
-            .catch(err => console.log(err))
+            .then(res => {
+                this.setState({ notif: { message: `The Note Has Been ${trashed === 1 ? "Trashed" : "Restored"} Successfully.`, type: "success" } }, () => {
+                    setTimeout(() => { this.setState({ notif: null }) }, 1700)
+                })
+                this.get_notes(this.state.folder)
+            })
+            .catch(err => this.setState({ notif: { message: "An Error Occured While Trashing The Note.", type: "error" } }, () => {
+                setTimeout(() => { this.setState({ notif: null }) }, 1700)
+            }))
     }
 
-    format_date = date => {
-        let d = new Date(date);
-        if (d.toString() !== "Invalid Date") return `${d.toLocaleDateString()}-${d.toLocaleTimeString()}`
-        else return "Unknown Date"
-    }
     logout = () => {
         this.props.logout()
         this.props.history.push("/login")
+    }
+
+    return_back = (folder) => {
+        this.get_notes(folder ? folder : this.state.folder)
     }
 
     render() {
@@ -144,99 +123,41 @@ class Home extends Component {
                 <div className="navbar"><NavBar search={this.search} user={this.props.auth.user} logout={this.logout} /></div>
                 <div className="notes-editor">
                     {
-                        this.state.adding_note
-                            ?
-                            <div className="editing-note">
-                                <div className="title">
-                                    <h4>Creating New Note:</h4>
-                                </div>
-                                <div className="head">
-                                    <div className="input-element">
-                                        <label htmlFor="title">Title: </label>
-                                        <input id="title" type="text" placeholder="Enter The Note Title" onChange={this.note_title} />
-                                    </div>
-                                    <div className="input-element">
-                                        <label htmlFor="privacy">Private: </label>
-                                        <input id="privacy" type="checkbox" onChange={this.note_privacy} defaultChecked={this.state.note_privacy === "private"} />
-                                    </div>
-                                </div>
-                                <div className="body">
-                                    <JoditEditor
-                                        value={this.state.note_content}
-                                        config={this.state.editor_config}
-                                        onBlur={new_content => this.setState({ note_content: new_content })} />
-                                </div>
-                                <div className="foot">
-                                    <button onClick={this.save_note}>Save Note</button>
-                                </div>
+                        this.state.notif ?
+                            <div className={`notify-user ${this.state.notif.type}`}>
+                                <p>{this.state.notif.message}</p>
                             </div>
                             :
-                            this.state.editing_note
+                            null
+                    }
+                    {
+                        this.state.display === "add_new" ?
+                            <AddingNewNote
+                                save_note={this.save_note}
+                                return_back={this.return_back}
+                            />
+                            : this.state.display === "edit_note"
                                 ?
-                                <div className="editing-note">
-                                    <div className="title">
-                                        <h4>Editing Note:</h4>
-                                    </div>
-                                    <div className="head">
-                                        <div className="input-element">
-                                            <label htmlFor="title">Title: </label>
-                                            <input id="title" type="text" placeholder="Enter The Note Title" onChange={this.note_title} defaultValue={this.state.note_title} />
-                                        </div>
-                                        <div className="input-element">
-                                            <label htmlFor="privacy">Private: </label>
-                                            <input id="privacy" type="checkbox" onChange={this.note_privacy} defaultChecked={this.state.note_privacy === "private"} />
-                                        </div>
-                                        <div className="input-element">
-                                            <label htmlFor="archived">Archived: </label>
-                                            <input id="archived" type="checkbox" onChange={this.note_archived} defaultChecked={this.state.note_archived === 1} />
-                                        </div>
-                                    </div>
-                                    <div className="body">
-                                        <JoditEditor
-                                            value={this.state.note_content}
-                                            config={this.state.editor_config}
-                                            onBlur={new_content => this.setState({ note_content: new_content })} />
-                                    </div>
-                                    <div className="foot">
-                                        <div className="infos">
-                                            <p><span className="fa fa-clock"></span> <span className="title">Last update at:</span> {this.format_date(this.state.note_last_update)}</p>
-                                        </div>
-                                        <button onClick={this.save_edited_note}>Update Note</button>
-                                    </div>
-                                </div>
-                                :
-                                this.state.showing_note
+                                <EditingNote
+                                    note={this.state.note_to_update}
+                                    save_edited_note={this.save_edited_note}
+                                    return_back={this.return_back}
+                                />
+                                : this.state.display === "show_note"
                                     ?
-                                    <div className="editing-note global-note">
-                                        <div className="title">
-                                            <h4>Global Note:</h4>
-                                        </div>
-                                        <div className="head">
-                                            <div className="input-element">
-                                                <label htmlFor="title">Title: </label>
-                                                <input id="title" type="text" placeholder="Enter The Note Title" readOnly defaultValue={this.state.note_title} />
-                                            </div>
-                                        </div>
-                                        <div className="body">
-                                            <h4>Content: </h4>
-                                            <JoditEditor value={this.state.note_content} config={this.state.editor_config} />
-                                        </div>
-                                        <div className="foot">
-                                            <div className="infos">
-                                                <p><span className="fa fa-clock"></span> <span className="title">Last update at:</span> {this.format_date(this.state.note_last_update)}</p>
-                                                <p><span className="fa fa-clock"></span> <span className="title">Created at:</span> {this.format_date(this.state.note_created_at)}</p>
-                                            </div>
-                                        </div>
-                                    </div>
-                                    :
-                                    <Notes
+                                    <DisplayNote
+                                        note={this.state.note}
+                                        return_back={this.return_back}
+                                    />
+                                    : <Notes
                                         add_new_note={this.add_new_note}
-                                        msg={this.state.msg}
+                                        folder={this.state.folder}
                                         notes={this.state.found_notes}
                                         update_note={this.update_note}
                                         show_note={this.show_note}
                                         user_id={this.props.auth.user.id}
                                         trash_note={this.trash_note}
+                                        return_back={this.return_back}
                                     />
 
                     }
@@ -246,10 +167,9 @@ class Home extends Component {
     }
 }
 
-const mapStateToProps = (store) => ({ ...store })
-const dispatchStateToProps = (dispatch) => {
-    return {
-        logout: () => dispatch(logout())
-    }
-}
-export default connect(mapStateToProps, dispatchStateToProps)(Home)
+const map_state_to_props = (store) => ({ ...store })
+const dispatch_state_to_props = (dispatch) => ({
+    logout: () => dispatch(logout())
+})
+
+export default connect(map_state_to_props, dispatch_state_to_props)(Home)
