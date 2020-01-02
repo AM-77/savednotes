@@ -1,0 +1,564 @@
+*{
+    padding: 0;
+    margin: 0;
+    box-sizing: border-box;
+}
+
+:root{
+    --pure-white: #FFFFFF;
+    --white: #F3F2F1;
+    --pure-black: #000000; 
+    --black: #4a4a4a;
+    --main: #8981D8;
+    --hard-main: #5a539c;
+    --faded-black: #0000002b;
+    --box-shadow: 0px 1px 3px 0px #0000002b;
+    --grey-white: #F9F9F9;
+    --green: #6fd491;
+    --blue: #4267da;
+    --yellow: #FCD000;
+    --brown: #8a746c;
+    --red: #ea2538;
+    --blue-grey: #607D8B;
+}
+
+::-webkit-scrollbar {
+    width: 4px;
+    height: 4px;
+}
+   
+::-webkit-scrollbar-track {
+    background: var(--faded-black);
+    border-radius: 3px
+}
+   
+::-webkit-scrollbar-thumb {
+    background-color: var(--main);
+    border-radius: 3px
+}
+
+body{
+    overflow: hidden
+}
+
+.fa-lock, .fa-globe, .fa-unlock, .fa-archive{
+    cursor: help
+}
+
+.app-container{
+    display: flex;
+}
+
+.home-container{
+    display: flex;
+    flex-direction: row;
+    width: 100%;
+}
+
+.home-container .sidebar{
+    display: flex;
+    flex-direction: column;
+    width: 20%;
+    min-width: 180px;
+    max-width: 180px;
+    overflow: hidden;
+    background: var(--main);
+    height: 100vh;
+}
+
+.home-container .sidebar .logo{
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+    align-items: center;
+    height: 60px;
+    background: var(--faded-black);
+}
+
+.home-container .sidebar .logo img{
+    display: flex;
+    width: 50px;
+    height: 50px;
+}
+
+.home-container .sidebar .logo span{
+    font-size: 16px;
+    font-weight: 700;
+    color: var(--white)
+}
+
+.home-container .sidebar .folders{
+    padding-top: 20px;
+}
+
+.home-container .sidebar button.folder{
+    display: block;
+    width: 100%;
+    height: 50px;
+    background: transparent;
+    border: none;
+    text-align: left;
+    padding-left: 20px;
+    color: var(--white);
+    font-family: "TheSans Mono";
+    font-weight: 700;
+    font-size: 12px;
+    outline: none;
+    cursor: pointer;
+    position: relative;
+    transition: all 150ms ease;
+}
+
+.home-container .sidebar button.folder:hover{
+    background: var(--faded-black)
+}
+
+.home-container .sidebar button.folder.active:before{
+    display:block;
+    content: "";
+    height: 80%;
+    width: 3px;
+    position: absolute;
+    top: 10%;
+    left: 0;
+    border-radius: 3px;
+    background: var(--white);
+}
+
+.home-container .sidebar .folders .divider{
+    display:block;
+    width: 70%;
+    height: 1px;
+    margin: 0 auto;
+    background: var(--faded-black)
+}
+
+.home-container .editor-container{
+    display: flex;
+    flex-direction: column;
+    max-width: calc(100% - 160px);
+    min-width: calc(100% - 180px);
+    background: var(--grey-white)
+}
+
+.home-container .editor-container .navbar{
+    height: 60px;
+    width: 100%;
+    background: var(--pure-white);
+    box-shadow: var(--box-shadow);
+}
+
+.home-container .editor-container .navbar .navbar-container{
+    display: flex;
+    height: 100%;
+    flex-direction: row;
+    align-items: center;
+    padding: 0px 20px;
+}
+
+.home-container .editor-container .navbar .navbar-container .search{
+    width: 80%;
+}
+
+.home-container .editor-container .navbar .navbar-container .search .fa-search{
+    color: var(--main);
+    font-size: 16px;
+}
+
+.home-container .editor-container .navbar .navbar-container .search input{
+    font-size: 14px;
+    border: none;
+    font-family: "TheSans Mono";
+    outline: none;
+    font-weight: 700;
+    margin-left: 10px;
+    width: 70%;
+}
+
+.home-container .editor-container .navbar .navbar-container .profile{
+    display: flex;
+    flex-direction: row;
+    margin-left: auto;
+    align-items: center;
+}
+
+.home-container .editor-container .navbar .navbar-container .profile .user-pic{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    width: 40px;
+    height: 40px;
+    background: var(--faded-black);
+    border-radius: 50%;
+    color: var(--main);
+    font-size: 16px;
+    margin-right: 10px;
+}
+
+.home-container .editor-container .navbar .navbar-container .profile .user-name{
+   display: flex;
+    justify-content: center;
+    align-items: center;
+    text-transform: capitalize;
+    font-weight: 700;
+    color: var(--black);
+    text-decoration: underline;
+}
+
+.home-container .editor-container .navbar .navbar-container .profile button{
+    margin: 0 0 0 10px;
+    width: 30px;
+    height: 30px;
+    background: transparent;
+    border: none;
+    font-size: 17px;
+    line-height: 2;
+    color: var(--faded-black);
+    cursor: pointer;
+    outline: none;
+    transition: color 200ms ease;
+}
+
+.home-container .editor-container .navbar .navbar-container .profile button:hover{
+    color: var(--hard-main)
+}
+
+.notes-container{
+    display: flex;
+    flex-direction: column;
+    margin: 20px;
+}
+
+.notes-container .notes{
+    display: flex;
+    flex-direction: row;
+    max-height: calc(100vh - 120px);
+    overflow-y: scroll;
+    align-items: flex-start;
+    flex-wrap: wrap;
+}
+
+.notes-container .notes .single-note{
+    display: flex;
+    flex-direction: column;
+    flex: 1;
+    background: var(--pure-white);
+    min-width: 250px;
+    max-width: 300px;
+    height: 140px;
+    margin: 10px;
+    padding: 10px;
+    border-radius: 3px;
+    box-shadow: var(--box-shadow);
+    overflow-wrap: break-word;
+    position: relative;
+}
+
+.notes-container .notes .single-note .head{
+    display: flex;
+    flex-direction: column;
+}
+
+.notes-container .notes .single-note .head .title{
+    display: flex;
+    flex-direction: row;
+    margin-bottom: 5px;
+    place-items: center;
+}
+
+.notes-container .notes .single-note .head .title .privacy{
+    margin-right: 10px;
+    display: flex;
+}
+
+.notes-container .notes .single-note .head .title .privacy .fa-unlock{
+    color: var(--green);
+}
+
+.notes-container .notes .single-note .head .title .privacy .fa-lock{
+    color: var(--yellow)
+}
+
+.notes-container .notes .single-note .head .title .privacy .fa-archive{
+    color: var(--brown);
+    margin-left: 5px;
+}
+
+.notes-container .notes .single-note .head .title .privacy .fa-globe{
+    color: var(--blue)
+}
+
+.notes-container .notes .single-note .head .title .edit{
+    color: var(--blue-grey);
+    margin-left: auto;
+    cursor: pointer;
+}
+
+.notes-container .notes .single-note .head .title h4{
+    font-weight: 700;
+    color: var(--black);
+    text-transform: capitalize;
+    font-family: "dosis";
+    line-height: 1.5;
+    transition: all 250ms ease;
+    position: relative;
+}
+
+.notes-container .notes .single-note .head .title h4:after{
+    display: block;
+    content: "";
+    position: absolute;
+    width: 0%;
+    bottom: 1px;
+    height: 2px;
+    background: var(--black);
+    transition: all 200ms ease
+}
+
+.notes-container .notes .single-note .head .title h4:hover:after{
+    width: 100%;
+    background: var(--pure-black)
+}
+
+.notes-container .notes .single-note .head .title h4:hover{
+    color: var(--pure-black);
+    cursor: pointer;
+}
+
+.notes-container .notes .single-note .head .clock span{
+    font-weight: 400;
+    font-size: 11px;
+    width: 100%;
+    padding: 5px 0 10px 0;
+    color: var(--black);
+}
+
+.notes-container .notes .single-note .content{
+    display: flex;
+    font-family: "source sans pro";
+    text-indent: 10px;
+    font-size: 14px;
+    word-break: break-word;
+}
+
+.notes-container .notes .single-note .foot{
+    display: flex;
+    flex-direction: row;
+    place-content: flex-end;
+    margin-top: auto;
+}
+
+.notes-container .notes .single-note .foot button.delete{
+    background: none;
+    border: none;
+    outline: none;
+    cursor: pointer
+}
+
+.notes-container .notes .single-note .foot button.delete span.fa-trash-restore{
+    color: var(--green);
+}
+
+.notes-container .notes .single-note .foot button.delete span{
+    color: var(--red);
+    opacity: 0.9;
+    transition: all 200ms ease;
+}
+
+.notes-container .notes .single-note .foot button.delete:hover span{
+    opacity: 1;
+    transform: rotate(25deg)
+}
+
+.notes-editor{
+    display: flex;
+    flex-direction: column;
+    flex: 1;
+}
+
+.editing-note{
+    display: flex;
+    flex: 1;
+    flex-direction:column;
+    padding: 20px;
+}
+
+.editing-note .title h4{
+    display: inline-block;
+    font-size: 21px;
+    font-family: "TheSans Mono";
+    color: var(--main);
+    text-transform: uppercase;
+    margin: 0 0 20px 0;
+    position: relative;
+}
+
+.editing-note .title h4:after{
+    display: block;
+    content: "";
+    position: absolute;
+    width: 100%;
+    height: 2px;
+    background: var(--main);
+}
+
+.editing-note .head{
+    display: flex;
+    align-items: center;
+    margin-bottom: 20px
+}
+
+.editing-note .head .input-element label{
+    font-weight: 700;
+}
+
+.editing-note .head .input-element input[type='text']{
+    display: block;
+    border: none;
+    margin-left: 10px;
+    background: transparent;
+    font-size: 14px;
+    font-family: "TheSans Mono";
+    font-weight: 700;
+    border-bottom: 2px solid var(--faded-black);
+    outline: none;
+    width: 220px;
+    transition: all 250ms ease;
+}
+
+.editing-note .head .input-element input[type='text']:hover,
+.editing-note .head .input-element input[type='text']:focus{
+    border-bottom: 2px solid var(--main);
+}
+
+.editing-note .head .input-element input[type='checkbox']{
+    width: 34px;
+    height: 14px;
+    cursor: pointer;
+    margin-left: 10px;
+    position: relative;
+}
+
+.editing-note .head .input-element input[type='checkbox']:before{
+    display: block;
+    content: "";
+    position: absolute;
+    width: 100%;
+    height: 100%;
+    background: var(--black);
+    border-radius: 7px;
+    transition: all 200ms cubic-bezier(0.25, 0.1, 0, 0.98);
+}
+
+.editing-note .head .input-element input[type='checkbox']:after{
+    display: block;
+    content: "";
+    position: absolute;
+    top: -2px;
+    left: -2px;
+    width: 18px;
+    height: 18px;
+    background: var(--pure-black);
+    box-shadow: var(--box-shadow);
+    border-radius: 9px;
+    transition: all 200ms cubic-bezier(0.25, 0.1, 0, 0.98);
+}
+
+.editing-note .head .input-element input[type='checkbox']:checked:before{
+    background: var(--main);
+}
+
+.editing-note .head .input-element input[type='checkbox']:checked:after{
+    left: calc(100% - 16px);
+    background: var(--hard-main)
+}
+
+.editing-note .head .input-element{
+    display: flex;
+    margin-right: 20px;
+}
+
+.editing-note .head .input-element:first-child{
+    margin-right:auto;
+}
+
+.editing-note .head .input-element:last-child{
+    margin-right: 0;
+}
+
+.editing-note .foot{
+    display: flex;
+    align-items: center;
+    margin-top: 15px;
+}
+
+.editing-note .foot .infos{
+    display: flex;
+    font-size: 13px;
+    font-family: "Source sans pro";
+    color: var(--black)
+}
+
+.editing-note .foot .infos .title{
+    font-weight: 700;
+}
+
+.editing-note .foot .infos .fa-clock{
+    color: var(--hard-main)
+}
+
+.editing-note .foot button{
+    margin-left: auto;
+    font-size: 12px;
+    font-family: "TheSans Mone";
+    text-transform: uppercase;
+    font-weight: 700;
+    padding: 6px 17px;
+    background: var(--main);
+    border-radius: 22px;
+    border: 1px solid var(--hard-main);
+    color: var(--white);
+    box-shadow: var(--box-shadow);
+    outline: none;
+    cursor: pointer;
+    transition: all 200ms cubic-bezier(0.25, 0.1, 0, 0.98)
+}
+
+.editing-note .foot button:hover{
+    background: var(--hard-main);
+}
+
+.global-note .head .input-element input[type='text'],
+.global-note .head .input-element input[type='text']:hover,
+.global-note .head .input-element input[type='text']:focus{
+   border: none
+}
+
+.global-note .foot .infos p{
+    margin-right: 25px;
+}
+
+.global-note .jodit_toolbar_container{
+    display: none;
+}
+
+.jodit_container .jodit_workplace {
+    display: flex;
+    max-height: 300px !important;
+}
+
+.jodit_toolbar, .jodit_statusbar {
+    border: 0px solid #ccc !important;
+    box-shadow: none !important
+}
+
+.jodit_container:not(.jodit_inline){
+    background: none !important
+}
+
+.jodit_container:not(.jodit_inline) .jodit_workplace {
+    border: 2px solid var(--main) !important;
+    border-radius: 3px;
+    margin: 10px 0;
+    background: var(--pure-white) !important
+}
