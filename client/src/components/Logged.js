@@ -8,19 +8,19 @@ const token = localStorage.getItem("token")
 
 class Logged extends Component {
     render() {
-        if (token && this.props.auth.user) {
+        if (this.props.auth.user) {
             return <React.Fragment>{this.props.children}</React.Fragment>
         } else {
             if (token) {
                 Axios.get("http://localhost:3300/sn-api/user", { headers: { authorization: "Bearer " + token } })
-                    .then(res => { this.props.load_user(token, res.data.result[0]) })
+                    .then(res => { this.props.load_user(token, res.data.result) })
                     .catch(err => {
                         this.props.logout()
                         return <Redirect to="/login" />
                     })
                 return <p>loading ...</p>
             } else {
-                return < Redirect to="/login" />
+                return <Redirect to="/login" />
             }
         }
     }
