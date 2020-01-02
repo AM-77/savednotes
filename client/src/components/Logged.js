@@ -26,10 +26,10 @@ class Logged extends Component {
     }
 }
 
-const mapStateToProps = (store) => ({ ...store })
-const dispatchStateToProps = (dispatch) => ({
+const map_state_to_props = (store) => ({ ...store })
+const dispatch_state_to_props = (dispatch) => ({
     load_user: (token, user) => dispatch(load_user(token, user)),
     logout: () => dispatch(logout())
 })
 
-export default connect(mapStateToProps, dispatchStateToProps)(Logged)
+export default connect(map_state_to_props, dispatch_state_to_props)(Logged)
