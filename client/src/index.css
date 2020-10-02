@@ -41,7 +41,8 @@
 }
 
 body {
-    overflow: hidden
+    overflow: hidden;
+    font-family: "TheSans Mono"
 }
 
 .fa-lock,
@@ -464,7 +465,7 @@ body {
 
 .notes-container .empty-notes .empty-wrapper button {
     font-size: 12px;
-    font-family: "TheSans Mone";
+    font-family: "TheSans Mono";
     text-transform: uppercase;
     font-weight: 700;
     padding: 8px 35px;
@@ -646,7 +647,7 @@ body {
 .editing-note .foot button {
     margin-left: auto;
     font-size: 12px;
-    font-family: "TheSans Mone";
+    font-family: "TheSans Mono";
     text-transform: uppercase;
     font-weight: 700;
     padding: 6px 17px;
@@ -799,7 +800,7 @@ body {
 .subscribe-container .subscribe-foot button {
     margin-left: auto;
     font-size: 12px;
-    font-family: "TheSans Mone";
+    font-family: "TheSans Mono";
     text-transform: uppercase;
     font-weight: 700;
     padding: 6px 17px;
