@@ -1,4 +1,5 @@
 const getDate = require("../utils/helpers");
+const noteSchema = require("../validation/note.schema");
 const db = require("../db");
 
 const getNotesByFolder = (req, res) => {
@@ -71,7 +72,8 @@ const getNotesById = (req, res) => {
 
 const PostNote = (req, res) => {
   const { userId, title, content, privacy } = req.body;
-  if (userId && title && content && privacy !== null) {
+  const { error } = noteSchema.validate({ userId, title, content, privacy });
+  if (!error) {
     const note = {
       id: 0,
       userId,
@@ -97,7 +99,7 @@ const PostNote = (req, res) => {
       }
     });
   } else {
-    res.status(400).json({ message: "Request Unsatisfied." });
+    res.status(400).json({ message: "Request Unsatisfied.", error });
   }
 };
 
@@ -120,7 +122,15 @@ const deleteNote = (req, res) => {
 
 const patchNote = (req, res) => {
   const { id, title, content, archived, privacy, trashed } = req.body;
-  if (id && title && content) {
+  const { error } = noteSchema.validate({
+    id,
+    title,
+    content,
+    archived,
+    privacy,
+    trashed,
+  });
+  if (!error) {
     db.query(
       `UPDATE notes SET title='${title}', content='${content}', lastUpdate='${getDate()}', privacy='${privacy}', archived='${archived}', trashed='${trashed}'  WHERE id=${id}`,
       (dbErr, dbRes) => {
@@ -138,7 +148,7 @@ const patchNote = (req, res) => {
       },
     );
   } else {
-    res.status(400).json({ message: "Request Unsatisfied." });
+    res.status(400).json({ message: "Request Unsatisfied.", error });
   }
 };
 

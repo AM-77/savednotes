@@ -1,10 +1,12 @@
 const bcryptjs = require("bcryptjs");
 const jwt = require("jsonwebtoken");
+const userSchema = require("../validation/user.schema");
 const db = require("../db");
 
 const subscribe = (req, res) => {
   const { email, password, username } = req.body;
-  if (email && password && username) {
+  const { error } = userSchema.validate({ email, password, username });
+  if (!error) {
     db.query(`SELECT * FROM users WHERE email = '${email}'`, (dbErr, dbRes) => {
       if (dbErr) {
         res.status(500).json({
@@ -46,7 +48,7 @@ const subscribe = (req, res) => {
       }
     });
   } else {
-    res.status(400).json({ message: "Request Unsatisfied." });
+    res.status(400).json({ message: "Request Unsatisfied.", error });
   }
 };
 
@@ -102,7 +104,12 @@ const getLoggedUser = (req, res) => {
 const patchUser = (req, res) => {
   const { username, newPassword } = req.body;
   const { email } = req.verifiedToken;
-  if (username || newPassword) {
+  const { error } = userSchema.validate({
+    email,
+    password: newPassword,
+    username,
+  });
+  if (!error) {
     let sql = "UPDATE users SET ";
     if (username) sql += ` username = '${username}'`;
     if (newPassword) {
@@ -152,7 +159,7 @@ const patchUser = (req, res) => {
       });
     }
   } else {
-    res.status(400).json({ message: "Request Unsatisfied." });
+    res.status(400).json({ message: "Request Unsatisfied.", error });
   }
 };
 
