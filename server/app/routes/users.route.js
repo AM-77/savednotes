@@ -1,7 +1,14 @@
 const express = require("express");
+
 const usersRouter = express.Router();
 const authentication = require("../middlewares/authentication");
-const { subscribe, login, patchUser, deleteUser, getLoggedUser } = require("../controllers/users.controller");
+const {
+  subscribe,
+  login,
+  patchUser,
+  deleteUser,
+  getLoggedUser,
+} = require("../controllers/users.controller");
 
 usersRouter.post("/subscribe", subscribe);
 
