@@ -399,6 +399,7 @@ body {
 
 .notes-container > h4 {
   color: var(--black);
+  margin-left: 10px;
   margin-bottom: 20px;
 }
 

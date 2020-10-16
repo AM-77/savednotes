@@ -25,10 +25,10 @@ export default function Notes(props) {
         <>
           <h4>
             <span>{notes.length}</span>
-            <span>Notes Was Found In The</span>
+            <span> Notes Was Found In The </span>
             <span>
               <span>{folderName(folder)}</span>
-              <span>Folder</span>
+              <span> Folder</span>
             </span>
           </h4>
           <div className="notes">
