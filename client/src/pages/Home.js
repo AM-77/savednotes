@@ -9,6 +9,7 @@ import Notes from '../components/Notes';
 import AddNote from '../components/AddNote';
 import EditNote from '../components/EditNote';
 import DisplayNote from '../components/DisplayNote';
+import Loading from '../components/Loading';
 
 class Home extends Component {
   constructor(props) {
@@ -16,6 +17,7 @@ class Home extends Component {
     this.state = {
       foundNotes: [],
       folder: 'all',
+      loadingNotes: true,
     };
   }
 
@@ -28,11 +30,12 @@ class Home extends Component {
     const {
       auth: { token },
     } = this.props;
+    this.setState({ loadingNotes: true });
     Axios.get(`${BASE_URL}/notes/search/${find === '' ? '*' : find}`, {
       headers: { authorization: `Bearer ${token}` },
     })
       .then((res) => {
-        this.setState({ foundNotes: res.data.result });
+        this.setState({ foundNotes: res.data.result, loadingNotes: false });
       })
       .catch(() => {
         this.displayMessage({
@@ -49,12 +52,12 @@ class Home extends Component {
         user: { id },
       },
     } = this.props;
-    this.setState({ folder, display: 'notes' });
+    this.setState({ folder, display: 'notes', loadingNotes: true });
     Axios.get(`${BASE_URL}/notes/${folder}/${id}`, {
       headers: { authorization: `Bearer ${token}` },
     })
       .then((res) => {
-        this.setState({ foundNotes: res.data, folder });
+        this.setState({ foundNotes: res.data, folder, loadingNotes: false });
       })
       .catch(() => {
         this.displayMessage({
@@ -190,7 +193,18 @@ class Home extends Component {
 
   renderDisplay = () => {
     const { auth } = this.props;
-    const { display, noteToUpdate, note, folder, foundNotes } = this.state;
+    const {
+      display,
+      noteToUpdate,
+      note,
+      folder,
+      foundNotes,
+      loadingNotes,
+    } = this.state;
+
+    if (loadingNotes) {
+      return <Loading />;
+    }
     switch (display) {
       case 'addNew':
         return (
