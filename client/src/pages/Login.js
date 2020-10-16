@@ -55,22 +55,21 @@ class Login extends Component {
             }
           })
           .catch((err) => {
-            if (err.message && err.message.data) {
+            if (err.response.status >= 500) {
               this.notify({
-                message: err.response.data.message,
+                message: 'Server Error! Please report this issue.',
                 type: 'error',
               });
             } else {
               this.notify({
-                message:
-                  'Server error, probably its due to the heroku app sleeping. Please try again in 10-15 second.',
+                message: 'Email or password is invalid.',
                 type: 'error',
               });
             }
           });
       } else {
         this.notify({
-          message: 'You have entred an unvalid email, please try again.',
+          message: 'You have entred an invalid email, please try again.',
           type: 'error',
         });
       }

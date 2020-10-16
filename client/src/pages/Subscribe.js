@@ -91,21 +91,20 @@ class Subscribe extends Component {
                 } else {
                   this.notify({
                     message:
-                      'Email already exist, please try againt with a different email.',
+                      'Email already exist, please try with a different email.',
                     type: 'error',
                   });
                 }
               })
               .catch((err) => {
-                if (err.message && err.message.data) {
+                if (err.response && err.response.data) {
                   this.notify({
                     message: err.response.data.message,
                     type: 'error',
                   });
                 } else {
                   this.notify({
-                    message:
-                      'Sorry! Server error, please report this issue to us.',
+                    message: 'Server Error! Please report this issue.',
                     type: 'error',
                   });
                 }
