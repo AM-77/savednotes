@@ -5,6 +5,7 @@ package-lock.json
 yarn.lock
 .prettier*
 .eslint*
+*.css
 .DS_Store
 .env.local
 .env.development.local
