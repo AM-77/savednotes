@@ -3,7 +3,8 @@ build
 package.json
 package-lock.json
 yarn.lock
-.prettierignore
+.prettier*
+.eslint*
 .DS_Store
 .env.local
 .env.development.local
