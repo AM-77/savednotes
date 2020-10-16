@@ -1,31 +1,32 @@
-import React, { Component } from 'react'
-import { BrowserRouter as Router, Route, Switch, Redirect } from 'react-router-dom'
-import ReduxStore from './redux-store'
+import React from 'react';
+import {
+  BrowserRouter as Router,
+  Route,
+  Switch,
+  Redirect,
+} from 'react-router-dom';
+import ReduxStore from './redux-store';
 
-import Subscribe from './components/Subscribe'
-import Login from './components/Login'
-import Home from './components/Home'
-import Logged from './components/Logged'
+import Subscribe from './pages/Subscribe';
+import Login from './pages/Login';
+import Home from './pages/Home';
+import Logged from './components/Logged';
 
-import '@fortawesome/fontawesome-free/css/all.min.css'
-
-export default class App extends Component {
-    render() {
-        return (
-            <ReduxStore>
-                <div className="app-container">
-                    <Router>
-                        <Switch>
-                            <Route path="/login" component={Login} />
-                            <Route path="/subscribe" component={Subscribe} />
-                            <Logged>
-                                <Route exact path="/" component={Home} />
-                                <Redirect to="/" />
-                            </Logged>
-                        </Switch>
-                    </Router>
-                </div>
-            </ReduxStore>
-        )
-    }
+export default function App() {
+  return (
+    <ReduxStore>
+      <div className="app-container">
+        <Router>
+          <Switch>
+            <Route path="/login" component={Login} />
+            <Route path="/subscribe" component={Subscribe} />
+            <Logged>
+              <Route exact path="/" component={Home} />
+              <Redirect to="/" />
+            </Logged>
+          </Switch>
+        </Router>
+      </div>
+    </ReduxStore>
+  );
 }

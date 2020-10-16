@@ -1,62 +1,95 @@
-import React, { Component } from 'react'
-import JoditEditor from 'jodit-react'
+import React, { Component } from 'react';
+import JoditEditor from 'jodit-react';
+import PropTypes from 'prop-types';
 
-export default class AddingNewNote extends Component {
+export default class AddNote extends Component {
+  constructor(props) {
+    super(props);
+    this.state = {
+      noteTitle: null,
+      notePrivacy: false,
+      noteContent: '',
+    };
+  }
 
-    constructor(props) {
-        super(props)
-        this.state = {
-            note_title: null,
-            note_privacy: false,
-            note_content: ""
-        }
+  onInputChange = (e) => {
+    const { name } = e.target;
+    if (name === 'notePrivacy') {
+      if (e.target.checked) {
+        this.setState({ notePrivacy: 'private' });
+      } else {
+        this.setState({ notePrivacy: 'public' });
+      }
     }
+    this.setState({ [name]: e.target.value });
+  };
 
-    on_input_change = e => {
-        let name = e.target.name, value
-        if (name === 'note_privacy') {
-            e.target.checked ? value = "private" : value = "public"
-        }
-        else value = e.target.value
-        this.setState({ [name]: value })
-    }
+  saveNote = () => {
+    const { saveNote } = this.props;
+    const { noteTitle, notePrivacy, noteContent } = this.state;
+    saveNote({ noteTitle, notePrivacy, noteContent });
+  };
 
-    save_note = () => {
-        this.props.save_note({
-            note_title: this.state.note_title,
-            note_privacy: this.state.note_privacy,
-            note_content: this.state.note_content
-        })
-    }
-
-    render() {
-        return (
-            <React.Fragment>
-                <div className="editing-note">
-                    <div className="title">
-                        <h4>Creating New Note:</h4>
-                        <button onClick={() => this.props.return_back("add-new")}>
-                            <span className="fa fa-arrow-left"></span>
-                        </button>
-                    </div>
-                    <div className="head">
-                        <div className="input-element">
-                            <label htmlFor="title">Title: </label>
-                            <input id="title" name="note_title" type="text" placeholder="Enter The Note Title" onChange={this.on_input_change} />
-                        </div>
-                        <div className="input-element">
-                            <label htmlFor="privacy">Private: </label>
-                            <input id="privacy" type="checkbox" name="note_privacy" onChange={this.on_input_change} />
-                        </div>
-                    </div>
-                    <div className="body">
-                        <JoditEditor value={this.state.note_content} onBlur={new_content => this.setState({ note_content: new_content })} />
-                    </div>
-                    <div className="foot">
-                        <button onClick={this.save_note}>Save Note</button>
-                    </div>
-                </div>
-            </React.Fragment>
-        )
-    }
+  render() {
+    const { returnBack } = this.props;
+    const { noteContent } = this.state;
+    return (
+      <>
+        <div className="editing-note">
+          <div className="title">
+            <h4>Creating New Note:</h4>
+            <button type="button" onClick={() => returnBack('add-new')}>
+              <span className="icon icon-arrow-left">
+                <svg viewBox="0 0 492 492">
+                  <g>
+                    <path d="M464.344,207.418l0.768,0.168H135.888l103.496-103.724c5.068-5.064,7.848-11.924,7.848-19.124 c0-7.2-2.78-14.012-7.848-19.088L223.28,49.538c-5.064-5.064-11.812-7.864-19.008-7.864c-7.2,0-13.952,2.78-19.016,7.844 L7.844,226.914C2.76,231.998-0.02,238.77,0,245.974c-0.02,7.244,2.76,14.02,7.844,19.096l177.412,177.412 c5.064,5.06,11.812,7.844,19.016,7.844c7.196,0,13.944-2.788,19.008-7.844l16.104-16.112c5.068-5.056,7.848-11.808,7.848-19.008 c0-7.196-2.78-13.592-7.848-18.652L134.72,284.406h329.992c14.828,0,27.288-12.78,27.288-27.6v-22.788 C492,219.198,479.172,207.418,464.344,207.418z" />
+                  </g>
+                </svg>
+              </span>
+            </button>
+          </div>
+          <div className="head">
+            <div className="input-element">
+              <label htmlFor="title">Title: </label>
+              <input
+                id="title"
+                name="noteTitle"
+                type="text"
+                placeholder="Enter The Note Title"
+                onChange={this.onInputChange}
+                required
+              />
+            </div>
+            <div className="input-element">
+              <label htmlFor="privacy">Private: </label>
+              <input
+                id="privacy"
+                type="checkbox"
+                name="notePrivacy"
+                onChange={this.onInputChange}
+              />
+            </div>
+          </div>
+          <div className="body">
+            <JoditEditor
+              value={noteContent}
+              onChange={(content) => {
+                this.setState({ noteContent: content });
+              }}
+            />
+          </div>
+          <div className="foot">
+            <button type="button" onClick={this.saveNote}>
+              Save Note
+            </button>
+          </div>
+        </div>
+      </>
+    );
+  }
 }
+
+AddNote.propTypes = {
+  returnBack: PropTypes.func.isRequired,
+  saveNote: PropTypes.func.isRequired,
+};
