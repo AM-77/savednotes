@@ -6,6 +6,7 @@ yarn.lock
 .prettier*
 .eslint*
 *.css
+*.html
 .DS_Store
 .env.local
 .env.development.local
