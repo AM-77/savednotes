@@ -1,0 +1,1493 @@
+@import url('https://fonts.googleapis.com/css2?family=Noto+Sans+JP&family=Roboto&display=swap');
+* {
+  padding: 0;
+  margin: 0;
+  box-sizing: border-box;
+}
+
+:root {
+  --pure-white: #ffffff;
+  --white: #eef0f5;
+  --pure-black: #000000;
+  --black: #4a4a4a;
+  --main: rgba(137, 129, 216, 1);
+  --hard-main: #5a539c;
+  --faded-black: #0000002b;
+  --box-shadow: 0px 1px 3px 0px #0000002b;
+  --grey-white: #f9f9f9;
+  --green: #119955;
+  --blue: #4267da;
+  --yellow: #fcd000;
+  --brown: #8a746c;
+  --red: #f3d4d4;
+  --hard-red: #ff3b3b;
+  --blue-grey: #607d8b;
+  --bg-default: rgba(240, 242, 247, 1);
+  --bg-action: rgba(137, 129, 216, 1);
+  --color-shadow: 12, 13, 18;
+  --color-light: 255, 255, 255;
+  --color-glow: 137, 129, 216;
+}
+
+::selection {
+  background: var(--main);
+  color: var(--white);
+}
+
+::-webkit-scrollbar {
+  width: 4px;
+  height: 4px;
+}
+
+::-webkit-scrollbar-track {
+  background: var(--faded-black);
+  border-radius: 3px;
+}
+
+::-webkit-scrollbar-thumb {
+  background-color: var(--main);
+  border-radius: 3px;
+}
+
+body {
+  overflow: hidden;
+  font-family: 'Noto Sans JP', 'Roboto', 'Open Sans', sans-serif;
+}
+
+.fa-lock,
+.fa-globe,
+.fa-unlock,
+.fa-archive {
+  cursor: help;
+}
+
+.app-container {
+  display: flex;
+}
+
+.home-container {
+  display: flex;
+  flex-direction: row;
+  width: 100%;
+}
+
+.home-container .sidebar {
+  display: flex;
+  flex-direction: column;
+  width: 20%;
+  min-width: 180px;
+  max-width: 180px;
+  overflow: hidden;
+  background: var(--main);
+  height: 100vh;
+}
+
+.home-container .sidebar .logo {
+  display: flex;
+  flex-direction: row;
+  justify-content: center;
+  align-items: center;
+  height: 60px;
+  background: var(--faded-black);
+}
+
+.home-container .sidebar .logo img {
+  display: flex;
+  width: 50px;
+  height: 50px;
+}
+
+.home-container .sidebar .logo span {
+  font-size: 16px;
+  font-weight: 700;
+  color: var(--white);
+}
+
+.home-container .sidebar .folders {
+  padding-top: 20px;
+}
+
+.home-container .sidebar button.folder {
+  display: flex;
+  align-items: center;
+  width: 100%;
+  height: 50px;
+  background: transparent;
+  border: none;
+  text-align: left;
+  color: var(--white);
+  font-size: 13px;
+  font-family: 'Noto Sans JP', 'Roboto', 'Open Sans', sans-serif;
+  font-weight: 700;
+  cursor: pointer;
+  position: relative;
+  outline: none;
+  transition: all 150ms ease;
+  overflow: hidden;
+}
+
+.home-container .sidebar button.folder:hover {
+  background: var(--faded-black);
+}
+
+.home-container .sidebar button.folder.active {
+  box-shadow: inset -2px -2px 2px 0px rgba(var(--color-shadow), 0.06),
+    inset -4px -4px 4px 0px rgba(var(--color-shadow), 0.06),
+    inset 2px 2px 2px 0px rgba(var(--color-shadow), 0.06),
+    inset 4px 4px 4px 0px rgba(var(--color-shadow), 0.06);
+}
+
+.home-container .sidebar button.folder.active:before {
+  display: block;
+  content: '';
+  height: 80%;
+  width: 3px;
+  position: absolute;
+  top: 10%;
+  left: 0;
+  border-radius: 3px;
+  background: var(--white);
+}
+
+.home-container .sidebar button.folder .icon {
+  display: block;
+  height: 40px;
+  overflow: hidden;
+  width: 40px;
+  padding: 8px;
+}
+
+.home-container .sidebar button.folder .icon svg {
+  display: block;
+  width: 100%;
+  height: 100%;
+}
+
+.home-container .sidebar .folders .divider {
+  display: block;
+  width: 70%;
+  height: 1px;
+  margin: 0 auto;
+  background: var(--faded-black);
+}
+
+.home-container .editor-container {
+  display: flex;
+  flex-direction: column;
+  max-width: calc(100% - 160px);
+  min-width: calc(100% - 180px);
+  background: var(--white);
+  position: relative;
+}
+
+.home-container .editor-container .navbar {
+  height: 60px;
+  width: 100%;
+  background: var(--bg-default);
+  box-shadow: var(--box-shadow);
+  z-index: 10;
+}
+
+.home-container .editor-container .navbar .navbar-container {
+  display: flex;
+  height: 100%;
+  flex-direction: row;
+  align-items: center;
+  padding: 0px 20px;
+  position: relative;
+}
+
+.home-container .editor-container .navbar .navbar-container .search {
+  display: flex;
+  align-items: center;
+  width: 100%;
+  max-width: 450px;
+  margin-right: 10px;
+  padding: 0 10px;
+  position: relative;
+  border-radius: 25px;
+  background: var(--bg-default);
+  box-shadow: inset 1px 1px 1px rgba(var(--color-light), 0.4),
+    inset -1px -1px 1px rgba(var(--color-shadow), 0.04),
+    inset 0 0 0 2px var(--bg-default),
+    inset -2px -2px 2px 2px rgba(var(--color-light), 0.4),
+    inset -4px -4px 4px 2px rgba(var(--color-light), 0.4),
+    -1px -1px 4px 0px rgba(var(--color-light), 0.4),
+    -2px -2px 8px 0px rgba(var(--color-light), 0.4),
+    inset 2px 2px 2px 2px rgba(var(--color-shadow), 0.04),
+    inset 4px 4px 4px 2px rgba(var(--color-shadow), 0.04),
+    1px 1px 4px 0px rgba(var(--color-shadow), 0.04),
+    2px 2px 8px 0px rgba(var(--color-shadow), 0.04);
+}
+
+.home-container .editor-container .navbar .navbar-container .search .icon {
+  display: flex;
+  align-items: center;
+  width: 25px;
+  height: 40px;
+  cursor: pointer;
+  overflow: hidden;
+}
+
+.home-container .editor-container .navbar .navbar-container .search .icon svg {
+  height: 100%;
+  transition: fill 250ms ease;
+}
+
+.home-container
+  .editor-container
+  .navbar
+  .navbar-container
+  .search
+  .icon:hover
+  svg {
+  fill: var(--main);
+}
+
+.home-container .editor-container .navbar .navbar-container .search input {
+  font-size: 14px;
+  font-family: 'Noto Sans JP', 'Roboto', 'Open Sans', sans-serif;
+  border: none;
+  color: var(--black);
+  outline: none;
+  font-weight: 700;
+  margin-left: 10px;
+  width: 100%;
+  background: var(--bg-default);
+}
+
+.home-container .editor-container .navbar .navbar-container .profile {
+  display: flex;
+  flex-direction: row;
+  margin-left: auto;
+  align-items: center;
+}
+
+.home-container
+  .editor-container
+  .navbar
+  .navbar-container
+  .profile
+  .user-name {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  font-weight: 700;
+  color: var(--black);
+}
+
+.home-container .editor-container .navbar .navbar-container .profile button {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin: 0 0 0 10px;
+  width: 40px;
+  height: 40px;
+  background: transparent;
+  border: none;
+  border-radius: 25px;
+  font-size: 17px;
+  color: var(--faded-black);
+  cursor: pointer;
+  position: relative;
+  overflow: hidden;
+  outline: none;
+  padding: 9px;
+  box-shadow: inset 1px 1px 1px rgba(var(--color-light), 0.4),
+    inset -1px -1px 1px rgba(var(--color-shadow), 0.04),
+    inset 0 0 0 2px var(--bg-default),
+    inset -2px -2px 2px 2px rgba(var(--color-light), 0.4),
+    inset -4px -4px 4px 2px rgba(var(--color-light), 0.4),
+    -1px -1px 4px 0px rgba(var(--color-light), 0.4),
+    -2px -2px 8px 0px rgba(var(--color-light), 0.4),
+    inset 2px 2px 2px 2px rgba(var(--color-shadow), 0.04),
+    inset 4px 4px 4px 2px rgba(var(--color-shadow), 0.04),
+    1px 1px 4px 0px rgba(var(--color-shadow), 0.04),
+    2px 2px 8px 0px rgba(var(--color-shadow), 0.04);
+}
+
+.home-container
+  .editor-container
+  .navbar
+  .navbar-container
+  .profile
+  button
+  svg {
+  width: 80%;
+  height: 80%;
+  transition: fill 250ms ease;
+}
+
+.home-container
+  .editor-container
+  .navbar
+  .navbar-container
+  .profile
+  button:hover
+  svg {
+  fill: var(--hard-main);
+}
+
+.home-container
+  .editor-container
+  .navbar
+  .navbar-container
+  .profile
+  button:active {
+  box-shadow: 1px 1px 1px rgba(var(--color-light), 1),
+    inset -2px -2px 2px rgba(var(--color-light), 0.9),
+    inset -3px -3px 4px rgba(var(--color-light), 0.9),
+    inset -6px -6px 12px rgba(var(--color-light), 0.9),
+    inset -8px -8px 16px rgba(var(--color-light), 0.9),
+    -1px -1px 1px rgba(var(--color-shadow), 0.06),
+    inset 2px 2px 2px rgba(var(--color-shadow), 0.08),
+    inset 3px 3px 4px rgba(var(--color-shadow), 0.08),
+    inset 6px 6px 12px rgba(var(--color-shadow), 0.08),
+    inset 8px 8px 16px rgba(var(--color-shadow), 0.08);
+}
+
+.notify-user {
+  display: block;
+  margin: 0 auto;
+  padding: 7px 12px;
+  position: absolute;
+  bottom: 20px;
+  right: -400px;
+  z-index: 1;
+  font-size: 12px;
+  border-radius: 5px;
+  animation: notify_user 2700ms cubic-bezier(0.54, -0.02, 0.34, 0.96) forwards;
+}
+
+.notify-user.success {
+  background: var(--pure-white);
+  color: var(--green);
+  border: 1px solid var(--green);
+}
+
+.notify-user.error {
+  background: var(--pure-white);
+  color: var(--hard-red);
+  border: 1px solid var(--hard-red);
+}
+
+@keyframes notify_user {
+  0% {
+    opacity: 0;
+    right: -400px;
+  }
+
+  20%,
+  90% {
+    bottom: 20px;
+    right: 20px;
+    opacity: 1;
+  }
+
+  100% {
+    opacity: 0;
+    right: 20px;
+  }
+}
+
+.notes-container {
+  display: flex;
+  flex: 1;
+  flex-direction: column;
+  margin: 20px;
+}
+
+.notes-container > h4 {
+  color: var(--black);
+  margin-bottom: 20px;
+}
+
+.notes-container > h4 span {
+  text-transform: uppercase;
+  color: var(--main);
+}
+
+.notes-container .notes {
+  display: flex;
+  flex-direction: row;
+  max-height: calc(100vh - 120px);
+  align-items: flex-start;
+  flex-wrap: wrap;
+}
+
+.notes-container .notes .single-note {
+  display: flex;
+  flex-direction: column;
+  flex: 1;
+  background: var(--bg-default);
+  min-width: 320px;
+  max-width: 350px;
+  margin: 10px;
+  padding: 10px;
+  box-shadow: inset 1px 1px 1px rgba(var(--color-light), 1),
+    -2px -2px 2px rgba(var(--color-light), 0.9),
+    -4px -4px 6px rgba(var(--color-light), 0.9),
+    -8px -8px 16px rgba(var(--color-light), 0.9),
+    -12px -12px 24px rgba(var(--color-light), 0.9),
+    inset -1px -1px 1px rgba(var(--color-shadow), 0.06),
+    2px 2px 2px rgba(var(--color-shadow), 0.08),
+    4px 4px 6px rgba(var(--color-shadow), 0.08),
+    8px 8px 16px rgba(var(--color-shadow), 0.08),
+    12px 12px 24px rgba(var(--color-shadow), 0.08);
+  overflow-wrap: break-word;
+  position: relative;
+  overflow: hidden;
+  border-radius: 10px;
+}
+
+.notes-container .notes .icon svg {
+  width: 100%;
+  height: 100%;
+}
+
+.notes-container .notes .single-note .head {
+  display: flex;
+  flex-direction: column;
+}
+
+.notes-container .notes .single-note .foot .clock {
+  display: flex;
+  align-items: center;
+  height: 25px;
+  width: 100%;
+  color: var(--black);
+}
+
+.notes-container .notes .single-note .foot .clock .icon {
+  display: block;
+  height: 15px;
+  width: 15px;
+  margin-left: 10px;
+}
+
+.notes-container .notes .single-note .foot .clock .icon svg {
+  position: relative;
+  fill: var(--black);
+  height: 15px;
+  top: -4px;
+}
+
+.notes-container .notes .single-note .foot .clock .value {
+  display: block;
+  font-size: 10px;
+  font-weight: 700;
+  margin-left: 10px;
+}
+
+.notes-container .notes .single-note .head .title {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  height: 40px;
+  margin-bottom: 10px;
+}
+
+.notes-container .notes .single-note .head .title .icon {
+  width: 40px;
+  padding: 6px;
+}
+
+.notes-container .notes .single-note .head .title .privacy {
+  margin-right: 5px;
+  display: flex;
+}
+
+.notes-container .notes .single-note .head .title .privacy .icon-unlock {
+  fill: var(--green);
+}
+
+.notes-container .notes .single-note .head .title .privacy .icon-lock {
+  fill: var(--yellow);
+}
+
+.notes-container .notes .single-note .head .title .privacy .icon-archive {
+  fill: var(--brown);
+}
+
+.notes-container .notes .single-note .head .title .privacy .icon-globe {
+  fill: var(--blue);
+}
+
+.notes-container .notes .single-note .head .title .icon-edit {
+  min-width: 40px;
+  max-height: 40px;
+  border-radius: 20px;
+  cursor: pointer;
+  margin-left: auto;
+  fill: var(--blue-grey);
+  transition: fill 250ms ease;
+}
+
+.notes-container .notes .single-note .head .title .icon-edit:hover {
+  fill: var(--pure-black);
+}
+
+.notes-container .notes .single-note .head .title .icon-read {
+  min-width: 40px;
+  max-height: 40px;
+  border-radius: 20px;
+  cursor: pointer;
+  margin-left: auto;
+  fill: var(--blue-grey);
+  transition: fill 250ms ease;
+}
+
+.notes-container .notes .single-note .head .title .icon-read:hover {
+  fill: var(--pure-black);
+}
+
+.notes-container .notes .single-note .head .title h4 {
+  display: flex;
+  width: 100%;
+  line-height: 2.5;
+  height: 100%;
+  color: var(--black);
+  font-weight: 400;
+  transition: all 250ms ease;
+  position: relative;
+  overflow: hidden;
+}
+
+.notes-container .notes .single-note .head .title h4:hover {
+  color: var(--pure-black);
+  cursor: pointer;
+}
+
+.notes-container .notes .single-note .content {
+  display: flex;
+  text-indent: 10px;
+  font-size: 14px;
+  word-break: break-word;
+}
+
+.notes-container .notes .single-note .foot {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  place-content: flex-end;
+  margin-top: 15px;
+  height: 40px;
+}
+
+.notes-container .notes .single-note .foot .trash {
+  width: 40px;
+  height: 40px;
+}
+
+.notes-container .notes .single-note .foot .trash .icon {
+  min-width: 40px;
+  min-height: 40px;
+}
+
+.notes-container .notes .single-note .foot button.delete {
+  background: none;
+  border: none;
+  outline: none;
+  cursor: pointer;
+  width: 40px;
+  height: 40px;
+  padding: 5px;
+  border-radius: 25px;
+}
+
+.notes-container .notes .single-note .foot button.delete .icon-restore {
+  fill: var(--green);
+}
+
+.notes-container .notes .single-note .foot button.delete .icon-trash {
+  fill: var(--hard-red);
+  opacity: 0.7;
+  transition: all 200ms ease;
+}
+
+.notes-container .notes .single-note .foot button.delete:hover .icon-trash {
+  opacity: 1;
+}
+
+.notes-container .empty-notes {
+  display: flex;
+  flex: 1;
+  justify-content: center;
+  align-items: center;
+}
+
+.notes-container .notes .single-note .head .title .icon-edit,
+.notes-container .notes .single-note .foot button.delete,
+.notes-container .notes .single-note .head .title .icon-read {
+  box-shadow: inset 1px 1px 1px rgba(var(--color-light), 0.4),
+    inset -1px -1px 1px rgba(var(--color-shadow), 0.04),
+    inset 0 0 0 2px var(--bg-default),
+    inset -2px -2px 2px 2px rgba(var(--color-light), 0.4),
+    inset -4px -4px 4px 2px rgba(var(--color-light), 0.4),
+    -1px -1px 4px 0px rgba(var(--color-light), 0.4),
+    -2px -2px 8px 0px rgba(var(--color-light), 0.4),
+    inset 2px 2px 2px 2px rgba(var(--color-shadow), 0.04),
+    inset 4px 4px 4px 2px rgba(var(--color-shadow), 0.04),
+    1px 1px 4px 0px rgba(var(--color-shadow), 0.04),
+    2px 2px 8px 0px rgba(var(--color-shadow), 0.04);
+}
+
+.notes-container .notes .single-note .head .title .icon-edit:active,
+.notes-container .notes .single-note .foot button.delete:active,
+.notes-container .notes .single-note .head .title .icon-read:active {
+  box-shadow: 1px 1px 1px rgba(var(--color-light), 1),
+    inset -2px -2px 2px rgba(var(--color-light), 0.9),
+    inset -3px -3px 4px rgba(var(--color-light), 0.9),
+    inset -6px -6px 12px rgba(var(--color-light), 0.9),
+    inset -8px -8px 16px rgba(var(--color-light), 0.9),
+    -1px -1px 1px rgba(var(--color-shadow), 0.06),
+    inset 2px 2px 2px rgba(var(--color-shadow), 0.08),
+    inset 3px 3px 4px rgba(var(--color-shadow), 0.08),
+    inset 6px 6px 12px rgba(var(--color-shadow), 0.08),
+    inset 8px 8px 16px rgba(var(--color-shadow), 0.08);
+}
+
+.notes-container .empty-notes .empty-wrapper {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  background: var(--white);
+  width: 450px;
+  min-width: 280px;
+  height: 150px;
+  border-radius: 20px;
+  margin: auto;
+  box-shadow: inset 1px 1px 1px rgba(var(--color-light), 1),
+    -2px -2px 2px rgba(var(--color-light), 0.9),
+    -4px -4px 6px rgba(var(--color-light), 0.9),
+    -8px -8px 16px rgba(var(--color-light), 0.9),
+    -12px -12px 24px rgba(var(--color-light), 0.9),
+    inset -1px -1px 1px rgba(var(--color-shadow), 0.06),
+    2px 2px 2px rgba(var(--color-shadow), 0.08),
+    4px 4px 6px rgba(var(--color-shadow), 0.08),
+    8px 8px 16px rgba(var(--color-shadow), 0.08),
+    12px 12px 24px rgba(var(--color-shadow), 0.08);
+}
+
+.notes-container .empty-notes .empty-wrapper h4 {
+  font-size: 17px;
+  font-weight: 300;
+  color: var(--black);
+}
+
+.notes-container .empty-notes .empty-wrapper button {
+  display: flex;
+  align-items: center;
+  font-size: 14px;
+  font-family: 'Noto Sans JP', 'Roboto', 'Open Sans', sans-serif;
+  text-transform: uppercase;
+  font-weight: 700;
+  padding: 8px 35px;
+  background: var(--main);
+  border-radius: 22px;
+  border: 1px solid var(--hard-main);
+  color: var(--white);
+  box-shadow: var(--box-shadow);
+  outline: none;
+  cursor: pointer;
+  transition: all 200ms cubic-bezier(0.25, 0.1, 0, 0.98);
+}
+
+.notes-container .empty-notes .empty-wrapper button:hover {
+  background: var(--hard-main);
+}
+
+.notes-editor {
+  display: flex;
+  flex-direction: column;
+  height: calc(100vh - 60px);
+  overflow: auto;
+  padding: 20px;
+}
+
+.editing-note {
+  display: flex;
+  flex: 1;
+  flex-direction: column;
+  margin: 0 20px;
+}
+
+.editing-note > .title {
+  display: flex;
+  align-items: center;
+  margin: 0 0 20px 0;
+}
+
+.editing-note .title h4 {
+  display: flex;
+  align-items: baseline;
+  font-size: 16px;
+  color: var(--main);
+  text-transform: uppercase;
+  position: relative;
+  padding: 8px 20px;
+  border-radius: 20px;
+  background: var(--bg-default);
+  box-shadow: inset 1px 1px 1px rgba(var(--color-light), 0.6),
+    inset -1px -1px 1px rgba(var(--color-shadow), 0.06),
+    -1px -1px 4px 0px rgba(var(--color-light), 0.6),
+    -2px -2px 8px 0px rgba(var(--color-light), 0.6),
+    1px 1px 4px 0px rgba(var(--color-shadow), 0.06),
+    2px 2px 8px 0px rgba(var(--color-shadow), 0.06);
+}
+
+.editing-note .title button {
+  margin-left: auto;
+  width: 40px;
+  height: 40px;
+  padding: 10px;
+  border-radius: 100%;
+  border: none;
+  cursor: pointer;
+  outline: none;
+  opacity: 0.75;
+  box-shadow: inset 1px 1px 1px rgba(var(--color-light), 0.4),
+    inset -1px -1px 1px rgba(var(--color-shadow), 0.04),
+    inset 0 0 0 2px var(--bg-default),
+    inset -2px -2px 2px 2px rgba(var(--color-light), 0.4),
+    inset -4px -4px 4px 2px rgba(var(--color-light), 0.4),
+    -1px -1px 4px 0px rgba(var(--color-light), 0.4),
+    -2px -2px 8px 0px rgba(var(--color-light), 0.4),
+    inset 2px 2px 2px 2px rgba(var(--color-shadow), 0.04),
+    inset 4px 4px 4px 2px rgba(var(--color-shadow), 0.04),
+    1px 1px 4px 0px rgba(var(--color-shadow), 0.04),
+    2px 2px 8px 0px rgba(var(--color-shadow), 0.04);
+  transition: opacity 200ms ease;
+}
+
+.editing-note .title button:active {
+  box-shadow: 1px 1px 1px rgba(var(--color-light), 1),
+    inset -2px -2px 2px rgba(var(--color-light), 0.9),
+    inset -3px -3px 4px rgba(var(--color-light), 0.9),
+    inset -6px -6px 12px rgba(var(--color-light), 0.9),
+    inset -8px -8px 16px rgba(var(--color-light), 0.9),
+    -1px -1px 1px rgba(var(--color-shadow), 0.06),
+    inset 2px 2px 2px rgba(var(--color-shadow), 0.08),
+    inset 3px 3px 4px rgba(var(--color-shadow), 0.08),
+    inset 6px 6px 12px rgba(var(--color-shadow), 0.08),
+    inset 8px 8px 16px rgba(var(--color-shadow), 0.08);
+}
+
+.editing-note .title button .icon {
+  fill: var(--main);
+}
+
+.editing-note .head {
+  display: flex;
+  align-items: center;
+  margin: 15px 0;
+}
+
+.editing-note .head .input-element label {
+  font-weight: 700;
+  font-family: 'Noto Sans JP', 'Roboto', 'Open Sans', sans-serif;
+  text-transform: uppercase;
+  font-size: 14px;
+}
+
+.editing-note .head .input-element input[type='text'] {
+  display: block;
+  border: none;
+  margin-left: 10px;
+  background: transparent;
+  font-family: 'Noto Sans JP', 'Roboto', 'Open Sans', sans-serif;
+  font-size: 16px;
+  outline: none;
+  width: 100%;
+  margin-right: 10px;
+  color: var(--black);
+  transition: all 250ms ease;
+}
+
+.editing-note .head .input-element input[type='checkbox'] {
+  width: 22px;
+  height: 22px;
+  cursor: pointer;
+  margin-left: 10px;
+  position: relative;
+}
+
+.editing-note .head .input-element input[type='checkbox']:before {
+  display: block;
+  content: '';
+  position: absolute;
+  top: -1px;
+  left: -1px;
+  width: 24px;
+  height: 24px;
+  flex-shrink: 0;
+  border-radius: 5px;
+  background-color: var(--bg-default);
+  box-shadow: inset 1px 1px 1px rgba(var(--color-light), 0.6),
+    inset -1px -1px 1px rgba(var(--color-shadow), 0.06),
+    -1px -1px 1px 0px rgba(var(--color-light), 0.6),
+    -1px -1px 4px 0px rgba(var(--color-light), 0.6),
+    -2px -2px 8px 0px rgba(var(--color-light), 0.6),
+    1px 1px 1px 0px rgba(var(--color-shadow), 0.06),
+    1px 1px 4px 0px rgba(var(--color-shadow), 0.06),
+    2px 2px 8px 0px rgba(var(--color-shadow), 0.06);
+}
+
+.editing-note .head .input-element input[type='checkbox']:after {
+  display: block;
+  content: '';
+  position: absolute;
+  z-index: 1;
+  top: 3px;
+  left: 3px;
+  width: 15px;
+  height: 15px;
+  border-radius: 4px;
+  background-color: var(--bg-default);
+  -webkit-transition: background-color 0.4s, box-shadow 0.4s;
+  transition: background-color 0.4s, box-shadow 0.4s;
+}
+
+.editing-note .head .input-element input[type='checkbox']:checked:after {
+  background-color: var(--bg-action);
+  box-shadow: inset 0 0 0px 1px rgba(var(--color-glow), 0.3),
+    inset 0 0 4px 1px rgba(var(--color-glow), 0.3),
+    inset 0 0 8px 1px rgba(var(--color-glow), 0.3),
+    inset -1px -1px 1px 0px rgba(var(--color-light), 0.6),
+    inset -2px -2px 2px 0px rgba(var(--color-light), 0.3),
+    inset 1px 1px 1px 0px rgba(var(--color-shadow), 0.6),
+    inset 2px 2px 2px 0px rgba(var(--color-shadow), 0.4);
+}
+
+.editing-note .head .input-element {
+  display: flex;
+  align-items: center;
+  margin-right: 20px;
+}
+
+.editing-note .head .input-element:first-child {
+  margin-right: auto;
+  padding: 10px 20px;
+  border-radius: 40px;
+  box-shadow: inset 1px 1px 1px rgba(var(--color-light), 0.4),
+    inset -1px -1px 1px rgba(var(--color-shadow), 0.04),
+    inset 0 0 0 2px var(--bg-default),
+    inset -2px -2px 2px 2px rgba(var(--color-light), 0.4),
+    inset -4px -4px 4px 2px rgba(var(--color-light), 0.4),
+    -1px -1px 4px 0px rgba(var(--color-light), 0.4),
+    -2px -2px 8px 0px rgba(var(--color-light), 0.4),
+    inset 2px 2px 2px 2px rgba(var(--color-shadow), 0.04),
+    inset 4px 4px 4px 2px rgba(var(--color-shadow), 0.04),
+    1px 1px 4px 0px rgba(var(--color-shadow), 0.04),
+    2px 2px 8px 0px rgba(var(--color-shadow), 0.04);
+}
+
+.editing-note .head .input-element:last-child {
+  margin-right: 0;
+}
+
+.editing-note .body {
+  margin: 20px 0;
+}
+
+.editing-note .body .content p {
+  background: transparent !important;
+  font-family: 'Noto Sans JP', 'Roboto', 'Open Sans', sans-serif !important;
+  font-size: 16px !important;
+}
+
+.editing-note .foot {
+  display: flex;
+  align-items: center;
+  margin-top: 15px;
+}
+
+.editing-note .foot .infos {
+  display: flex;
+  align-items: center;
+  font-size: 10px;
+  padding: 10px 15px;
+  border-radius: 20px;
+  color: var(--black);
+  background: var(--bg-default);
+  box-shadow: inset 1px 1px 1px rgba(var(--color-light), 0.6),
+    inset -1px -1px 1px rgba(var(--color-shadow), 0.06),
+    -1px -1px 4px 0px rgba(var(--color-light), 0.6),
+    -2px -2px 8px 0px rgba(var(--color-light), 0.6),
+    1px 1px 4px 0px rgba(var(--color-shadow), 0.06),
+    2px 2px 8px 0px rgba(var(--color-shadow), 0.06);
+}
+
+.editing-note .foot .infos .title {
+  display: block;
+  height: 15px;
+  font-weight: 700;
+}
+
+.editing-note .foot .infos .icon-clock {
+  display: block;
+  height: 15px;
+  margin-right: 5px;
+}
+
+.editing-note .foot .infos .icon-clock svg {
+  fill: var(--hard-main);
+  width: 15px;
+  height: 15px;
+}
+
+.editing-note .foot button {
+  margin-left: auto;
+  font-family: 'Noto Sans JP', 'Roboto', 'Open Sans', sans-serif;
+  font-size: 15px;
+  text-transform: uppercase;
+  font-weight: 700;
+  padding: 8px 20px;
+  border-radius: 22px;
+  border: none;
+  color: var(--hard-main);
+  outline: none;
+  cursor: pointer;
+  background: var(--bg-default);
+  box-shadow: inset 1px 1px 1px rgba(var(--color-light), 0.6),
+    inset -1px -1px 1px rgba(var(--color-shadow), 0.06),
+    -1px -1px 4px 0px rgba(var(--color-light), 0.6),
+    -2px -2px 8px 0px rgba(var(--color-light), 0.6),
+    1px 1px 4px 0px rgba(var(--color-shadow), 0.06),
+    2px 2px 8px 0px rgba(var(--color-shadow), 0.06);
+  transition: all 200ms cubic-bezier(0.25, 0.1, 0, 0.98);
+}
+
+.editing-note .foot button:active {
+  box-shadow: 1px 1px 1px rgba(var(--color-light), 1),
+    inset -2px -2px 2px rgba(var(--color-light), 0.9),
+    inset -3px -3px 4px rgba(var(--color-light), 0.9),
+    inset -6px -6px 12px rgba(var(--color-light), 0.9),
+    inset -8px -8px 16px rgba(var(--color-light), 0.9),
+    -1px -1px 1px rgba(var(--color-shadow), 0.06),
+    inset 2px 2px 2px rgba(var(--color-shadow), 0.08),
+    inset 3px 3px 4px rgba(var(--color-shadow), 0.08),
+    inset 6px 6px 12px rgba(var(--color-shadow), 0.08),
+    inset 8px 8px 16px rgba(var(--color-shadow), 0.08);
+}
+
+.global-note .head .input-element input[type='text'],
+.global-note .head .input-element input[type='text']:hover,
+.global-note .head .input-element input[type='text']:focus {
+  border: none;
+}
+
+.global-note .foot .infos p {
+  margin-right: 25px;
+}
+
+.global-note .jodit_toolbar_container {
+  display: none;
+}
+
+.jodit_container .jodit_workplace {
+  display: flex;
+  max-height: 300px !important;
+}
+
+.jodit_toolbar,
+.jodit_statusbar {
+  border: 0px solid #ccc !important;
+  box-shadow: none !important;
+}
+
+.jodit_container:not(.jodit_inline) {
+  background: none !important;
+}
+
+.jodit_container:not(.jodit_inline) .jodit_workplace {
+  border: 2px solid var(--main) !important;
+  border-radius: 3px;
+  margin: 10px 0;
+  background: var(--pure-white) !important;
+}
+
+.jodit_container:not(.jodit_inline) .jodit_wysiwyg {
+  overflow-wrap: break-word;
+}
+
+.login-container,
+.subscribe-container {
+  display: flex;
+  flex-direction: column;
+  flex: 1;
+  height: 100vh;
+  justify-content: center;
+  align-items: center;
+  background: var(--white);
+}
+
+.login-container .login-logo,
+.subscribe-container .subscribe-logo {
+  min-width: 360px;
+  text-align: center;
+  margin-bottom: 30px;
+  padding: 20px;
+  background: var(--white);
+  border-radius: 10px;
+  text-shadow: 0 -1px 0 rgba(var(--color-shadow), 0.08),
+    0 1px 0 rgba(var(--color-light), 1);
+  box-shadow: inset 1px 1px 1px rgba(var(--color-light), 1),
+    -2px -2px 2px rgba(var(--color-light), 0.9),
+    -4px -4px 6px rgba(var(--color-light), 0.9),
+    -8px -8px 16px rgba(var(--color-light), 0.9),
+    -12px -12px 24px rgba(var(--color-light), 0.9),
+    inset -1px -1px 1px rgba(var(--color-shadow), 0.06),
+    2px 2px 2px rgba(var(--color-shadow), 0.08),
+    4px 4px 6px rgba(var(--color-shadow), 0.08),
+    8px 8px 16px rgba(var(--color-shadow), 0.08),
+    12px 12px 24px rgba(var(--color-shadow), 0.08);
+}
+
+.login-container .login-logo img,
+.subscribe-container .subscribe-logo img {
+  width: 150px;
+}
+
+.login-container .login-logo h2,
+.subscribe-container .subscribe-logo h2 {
+  font-size: 37px;
+  text-transform: lowercase;
+  color: var(--main);
+}
+
+.login-container .login-form,
+.subscribe-container .subscribe-form {
+  width: 350px;
+}
+
+.login-container .login-form form,
+.login-container .login-input,
+.subscribe-container .subscribe-form form,
+.subscribe-container .subscribe-input {
+  display: flex;
+  flex-direction: column;
+}
+
+.login-container .login-input,
+.subscribe-container .subscribe-input {
+  margin-bottom: 15px;
+}
+
+.login-container .login-input:last-child,
+.subscribe-container .subscribe-input:last-child {
+  margin-bottom: 0;
+}
+
+.login-container .login-input label,
+.subscribe-container .subscribe-input label {
+  font-weight: 700;
+  color: var(--black);
+  font-size: 13px;
+  margin-bottom: 5px;
+}
+
+.login-container .login-input input,
+.subscribe-container .subscribe-input input {
+  display: block;
+  border: none;
+  background: transparent;
+  font-size: 16px;
+  font-family: 'Noto Sans JP', 'Roboto', 'Open Sans', sans-serif;
+  padding: 10px 25px;
+  border-radius: 25px;
+  outline: none;
+  transition: all 250ms ease;
+  background: var(--bg-default);
+  box-shadow: inset 1px 1px 1px rgba(var(--color-light), 0.4),
+    inset -1px -1px 1px rgba(var(--color-shadow), 0.04),
+    inset 0 0 0 2px var(--bg-default),
+    inset -2px -2px 2px 2px rgba(var(--color-light), 0.4),
+    inset -4px -4px 4px 2px rgba(var(--color-light), 0.4),
+    -1px -1px 4px 0px rgba(var(--color-light), 0.4),
+    -2px -2px 8px 0px rgba(var(--color-light), 0.4),
+    inset 2px 2px 2px 2px rgba(var(--color-shadow), 0.04),
+    inset 4px 4px 4px 2px rgba(var(--color-shadow), 0.04),
+    1px 1px 4px 0px rgba(var(--color-shadow), 0.04),
+    2px 2px 8px 0px rgba(var(--color-shadow), 0.04);
+}
+
+.login-container .login-foot,
+.subscribe-container .subscribe-foot {
+  display: flex;
+  align-items: center;
+}
+
+.login-container .login-foot button,
+.subscribe-container .subscribe-foot button {
+  margin-left: auto;
+  font-size: 16px;
+  text-transform: uppercase;
+  font-family: 'Noto Sans JP', 'Roboto', 'Open Sans', sans-serif;
+  padding: 10px 35px;
+  background: var(--whiye);
+  border-radius: 200px;
+  border: none;
+  color: var(--black);
+  text-shadow: 0 -1px 0 rgba(var(--color-shadow), 0.08),
+    0 1px 0 rgba(var(--color-light), 1);
+  box-shadow: inset 1px 1px 1px rgba(var(--color-light), 1),
+    -2px -2px 2px rgba(var(--color-light), 0.9),
+    -4px -4px 6px rgba(var(--color-light), 0.9),
+    -8px -8px 16px rgba(var(--color-light), 0.9),
+    -12px -12px 24px rgba(var(--color-light), 0.9),
+    inset -1px -1px 1px rgba(var(--color-shadow), 0.06),
+    2px 2px 2px rgba(var(--color-shadow), 0.08),
+    4px 4px 6px rgba(var(--color-shadow), 0.08),
+    8px 8px 16px rgba(var(--color-shadow), 0.08),
+    12px 12px 24px rgba(var(--color-shadow), 0.08);
+  outline: none;
+  cursor: pointer;
+  transition: all 200ms cubic-bezier(0.25, 0.1, 0, 0.98);
+}
+
+.login-container button:hover,
+.subscribe-container button:hover {
+  color: var(--hard-main);
+}
+
+.login-container button:active,
+.subscribe-container button:active,
+.login-container .login-foot a:active,
+.subscribe-container .subscribe-foot a:active {
+  box-shadow: 1px 1px 1px rgba(var(--color-light), 1),
+    inset -2px -2px 2px rgba(var(--color-light), 0.9),
+    inset -3px -3px 4px rgba(var(--color-light), 0.9),
+    inset -6px -6px 12px rgba(var(--color-light), 0.9),
+    inset -8px -8px 16px rgba(var(--color-light), 0.9),
+    -1px -1px 1px rgba(var(--color-shadow), 0.06),
+    inset 2px 2px 2px rgba(var(--color-shadow), 0.08),
+    inset 3px 3px 4px rgba(var(--color-shadow), 0.08),
+    inset 6px 6px 12px rgba(var(--color-shadow), 0.08),
+    inset 8px 8px 16px rgba(var(--color-shadow), 0.08);
+}
+
+.login-container .login-foot a,
+.subscribe-container .subscribe-foot a {
+  text-decoration: none;
+  color: var(--main);
+  outline: none;
+  position: relative;
+  padding: 10px 15px;
+  border-radius: 25px;
+  transition: all 200ms cubic-bezier(0.25, 0.1, 0, 1.08);
+}
+
+.login-container .login-foot a:hover,
+.subscribe-container .subscribe-foot a:hover {
+  color: var(--hard-main);
+}
+
+.login-container .loading-user,
+.subscribe-container .loading-user {
+  display: flex;
+  height: 20px;
+}
+
+.login-container .loading-user .loading,
+.subscribe-container .loading-user .loading {
+  text-align: center;
+  position: relative;
+  font-weight: 700;
+  color: var(--hard-main);
+}
+
+.login-container .loading span,
+.subscribe-container .loading span {
+  position: relative;
+  top: -8px;
+  animation: up_down 600ms linear infinite;
+}
+
+.login-container .loading span:nth-child(2),
+.subscribe-container .loading span:nth-child(2) {
+  animation-delay: 200ms;
+}
+
+.login-container .loading span:nth-child(3),
+.subscribe-container .loading span:nth-child(3) {
+  animation-delay: 400ms;
+}
+
+@keyframes up_down {
+  0% {
+    top: -6px;
+  }
+
+  50% {
+    top: 0px;
+  }
+
+  100% {
+    top: -6px;
+  }
+}
+
+.laoding-container {
+  display: flex;
+  flex: 1;
+  justify-content: center;
+  align-items: center;
+  align-content: center;
+  height: 100vh;
+}
+
+.loading {
+  display: block;
+  width: 100%;
+  text-align: center;
+}
+
+.spinner {
+  display: inline-block;
+  position: relative;
+  width: 80px;
+  height: 80px;
+}
+
+.spinner img {
+  display: block;
+  width: 25px;
+  height: 25px;
+  position: relative;
+  left: 27px;
+  top: 27px;
+}
+
+.spinner div {
+  transform-origin: 40px 40px;
+  animation: spinner 1.2s linear infinite;
+}
+
+.spinner div:after {
+  content: ' ';
+  display: block;
+  position: absolute;
+  top: 3px;
+  left: 37px;
+  width: 6px;
+  height: 18px;
+  border-radius: 20%;
+  background-image: linear-gradient(
+    to bottom,
+    var(--hard-main) 0%,
+    var(--main) 90%,
+    var(--faded-black) 100%
+  );
+}
+
+.spinner div:nth-child(1) {
+  transform: rotate(0deg);
+  animation-delay: -1.1s;
+}
+
+.spinner div:nth-child(2) {
+  transform: rotate(30deg);
+  animation-delay: -1s;
+}
+
+.spinner div:nth-child(3) {
+  transform: rotate(60deg);
+  animation-delay: -0.9s;
+}
+
+.spinner div:nth-child(4) {
+  transform: rotate(90deg);
+  animation-delay: -0.8s;
+}
+
+.spinner div:nth-child(5) {
+  transform: rotate(120deg);
+  animation-delay: -0.7s;
+}
+
+.spinner div:nth-child(6) {
+  transform: rotate(150deg);
+  animation-delay: -0.6s;
+}
+
+.spinner div:nth-child(7) {
+  transform: rotate(180deg);
+  animation-delay: -0.5s;
+}
+
+.spinner div:nth-child(8) {
+  transform: rotate(210deg);
+  animation-delay: -0.4s;
+}
+
+.spinner div:nth-child(9) {
+  transform: rotate(240deg);
+  animation-delay: -0.3s;
+}
+
+.spinner div:nth-child(10) {
+  transform: rotate(270deg);
+  animation-delay: -0.2s;
+}
+
+.spinner div:nth-child(11) {
+  transform: rotate(300deg);
+  animation-delay: -0.1s;
+}
+
+.spinner div:nth-child(12) {
+  transform: rotate(330deg);
+  animation-delay: 0s;
+}
+
+@keyframes spinner {
+  0% {
+    opacity: 1;
+  }
+
+  100% {
+    opacity: 0;
+  }
+}
+
+.dots {
+  display: inline-block;
+  position: relative;
+  width: 48px;
+  margin: 0 auto;
+  height: 10px;
+}
+
+.dots div {
+  position: absolute;
+  top: 0px;
+  width: 7px;
+  height: 7px;
+  border-radius: 50%;
+  background: var(--black);
+  animation-timing-function: cubic-bezier(0, 1, 1, 0);
+}
+
+.dots div:nth-child(1) {
+  left: 5px;
+  animation: dots1 0.4s infinite;
+}
+
+.dots div:nth-child(2) {
+  left: 5px;
+  animation: dots2 0.4s infinite;
+}
+
+.dots div:nth-child(3) {
+  left: 20px;
+  animation: dots2 0.4s infinite;
+}
+
+.dots div:nth-child(4) {
+  left: 35px;
+  animation: dots3 0.4s infinite;
+}
+
+@keyframes dots1 {
+  0% {
+    transform: scale(0);
+  }
+
+  100% {
+    transform: scale(1);
+  }
+}
+
+@keyframes dots3 {
+  0% {
+    transform: scale(1);
+  }
+
+  100% {
+    transform: scale(0);
+  }
+}
+
+@keyframes dots2 {
+  0% {
+    transform: translate(0, 0);
+  }
+
+  100% {
+    transform: translate(15px, 0);
+  }
+}
+
+@media screen and (max-width: 600px) {
+  .home-container .sidebar {
+    min-width: 60px;
+    max-width: 60px;
+  }
+
+  .home-container .sidebar .logo .logo-name {
+    display: none;
+  }
+
+  .home-container .sidebar button.folder .title {
+    display: none;
+  }
+
+  .home-container .sidebar button.folder .icon {
+    width: 60px;
+  }
+
+  .home-container .editor-container {
+    max-width: calc(100% - 60px);
+    min-width: calc(100% - 60px);
+  }
+
+  .home-container .editor-container .notes-container {
+    margin-left: 0;
+    margin-right: 0;
+  }
+
+  .home-container .editor-container .notes-editor {
+    padding-left: 0;
+    padding-right: 0;
+  }
+
+  .notes-container .notes .single-note {
+    min-width: calc(100% - 20px);
+  }
+
+  .editing-note .head {
+    flex-direction: column;
+  }
+
+  .editing-note .head .input-element {
+    display: flex;
+    width: 100%;
+    margin: 10px 0;
+    justify-content: space-between;
+  }
+
+  .editing-note .foot {
+    flex-direction: column;
+    justify-content: center;
+  }
+
+  .editing-note .foot button {
+    margin: 10px 0;
+  }
+
+  .notes-container .empty-notes .empty-wrapper {
+    min-width: calc(100% - 40px);
+    max-width: calc(100% - 40px);
+    text-align: center;
+  }
+
+  .login-container .login-logo,
+  .subscribe-container .subscribe-logo,
+  .login-container .login-form,
+  .subscribe-container .subscribe-form {
+    max-width: 250px;
+    min-width: calc(100% - 50px);
+  }
+}
