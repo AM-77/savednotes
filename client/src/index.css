@@ -519,6 +519,8 @@ body {
   border-radius: 20px;
   cursor: pointer;
   margin-left: auto;
+  outline: none;
+  border: none;
   fill: var(--blue-grey);
   transition: fill 250ms ease;
 }
@@ -531,6 +533,8 @@ body {
   min-width: 40px;
   max-height: 40px;
   border-radius: 20px;
+  outline: none;
+  border: none;
   cursor: pointer;
   margin-left: auto;
   fill: var(--blue-grey);
