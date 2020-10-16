@@ -68,7 +68,7 @@ export default class DisplayNote extends Component {
 DisplayNote.propTypes = {
   returnBack: PropTypes.func.isRequired,
   note: PropTypes.shape({
-    id: PropTypes.string,
+    id: PropTypes.number,
     title: PropTypes.string.isRequired,
     content: PropTypes.string.isRequired,
     lastUpdate: PropTypes.string,

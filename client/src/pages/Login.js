@@ -46,6 +46,7 @@ class Login extends Component {
               const { logIn } = this.props;
               logIn(token, user);
               localStorage.setItem('token', token);
+              this.setState({ lookingForUser: false });
             } else {
               this.notify({
                 message: 'The user does not exist.',
