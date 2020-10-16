@@ -27,6 +27,18 @@
 ```bash
   git clone https://github.com/AM-77/savednotes
 ```
+- setup database:
+
+    - Create the database using the sql file in `./server/database/database.sql`.
+    - Create `.env` file in `./server/` and add these environment variables to it. 
+
+    ```
+        DB_HOST=
+        DB_PORT=
+        DB_NAME=
+        DB_USER=
+        DB_PASSWORD=
+    ```
 
 - run the server:
 
