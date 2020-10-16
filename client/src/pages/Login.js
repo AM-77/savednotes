@@ -62,7 +62,8 @@ class Login extends Component {
               });
             } else {
               this.notify({
-                message: 'Sorry! Server error, please report this issue to us.',
+                message:
+                  'Server error, probably its due to the heroku app sleeping. Please try again in 10-15 second.',
                 type: 'error',
               });
             }
