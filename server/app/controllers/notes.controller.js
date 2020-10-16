@@ -1,5 +1,5 @@
 const getDate = require("../utils/helpers");
-const noteSchema = require("../validation/note.schema");
+const noteSchema = require("../models/note.schema");
 const db = require("../db");
 
 const getNotesByFolder = (req, res) => {
@@ -83,8 +83,8 @@ const PostNote = (req, res) => {
       createdAt: getDate(),
       lastUpdate: getDate(),
     };
-    const sql = "INSERT INTO notes SET ?";
-    db.query(sql, note, (dbErr, dbRes) => {
+    const sql = `INSERT INTO notes (id, userId, title, content, privacy, archived, trashed, lastUpdate, createdAt) VALUES (NULL, '${note.userId}', '${note.title}', '${note.content}', '${note.privacy}', '0', '0', '${note.createdAt}', '${note.lastUpdate}')`;
+    db.query(sql, (dbErr, dbRes) => {
       if (dbErr) {
         res.status(500).json({
           message: "There Was An Error Inserting Data Into The DB.",

@@ -1,6 +1,6 @@
 const bcryptjs = require("bcryptjs");
 const jwt = require("jsonwebtoken");
-const userSchema = require("../validation/user.schema");
+const userSchema = require("../models/user.schema");
 const db = require("../db");
 
 const subscribe = (req, res) => {
@@ -29,8 +29,8 @@ const subscribe = (req, res) => {
               email,
               password: hashed,
             };
-            const sql = "INSERT INTO users SET ?";
-            db.query(sql, user, (innerDbErr, innerDbRes) => {
+            const sql = `INSERT INTO users (id, username, email, password) VALUES (NULL, '${user.username}', '${user.email}', '${user.password}')`;
+            db.query(sql, (innerDbErr, innerDbRes) => {
               if (innerDbErr) {
                 res.status(500).json({
                   message: "There Was An Error In Creating The User.",
@@ -40,6 +40,7 @@ const subscribe = (req, res) => {
                 res.status(200).json({
                   message: "The User Created Successfully.",
                   result: innerDbRes,
+                  user,
                 });
               }
             });
